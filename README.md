@@ -1,12 +1,14 @@
 # OpenCV for NodeJS
 
-This project is an attempt to use OpenCV on the Raspberry Pi to detect rectangles.
-The ultimate goal would be to drive a small robot using shape detection.
+This project is an attempt to use OpenCV on the Raspberry Pi to detect coloured shapes.
+The ultimate goal would be to drive a small robot using colour detection.
+
 
 ## Install the nodeJS binding for OpenCV.
 
 The project uses the Node module `opencv4node` available [here](https://github.com/justadudewhohacks/opencv4nodejs) to do the binding with OpenCV.
-This module is trying to install OpenCV automatically but it failed in my case. So I had to install the Windows version of openCV from the [official reelase website.](https://www.opencv.org/releases.html)
+
+This module tried to install OpenCV automatically but it failed in my case. So I had to install the Windows version of openCV from the [official reelase website.](https://www.opencv.org/releases.html)
 
 Then the Node module needs to know where to find the different components.
 I had to set the following environment variables:
@@ -37,43 +39,44 @@ I'm using two main sources of help:
 + Opencv4Node API documentation page [here](https://justadudewhohacks.github.io/opencv4nodejs/docs/Mat)
 
 
-## Testing the installation
+## Red Shape detection
 
-To check that everything seems OK, I'm using the following script:
+Let's start by detecting red shapes in an image.
 
+I'm using a combinaison of two tutorials:
+
++ This one [here](https://www.pyimagesearch.com/2016/02/08/opencv-shape-detection/) (for Python) focuses on the type of shapes (square, circle, etc.)
++ This other one [here](https://www.bluetin.io/opencv/opencv-color-detection-filtering-python/) is about colour filtering.
+
+The red colour is quite tricky to filter because it is at the upper and lower range of the HSV representation.
+We are using two filters, one filtering very low hues and another one filtering very high hues.
+
+The following script finds the contours of red shapes (including orange ones and some brown ones too...)
 
 ```js
-const cv = require('opencv4node')
+const lowRed_mask_up = new cv.Vec3(170, 100, 100)
+const highRed_mask_up = new cv.Vec3(180, 255, 255)
 
+const lowRed_mask_down = new cv.Vec3(0, 100, 100)
+const highRed_mask_down = new cv.Vec3(15, 255, 255)
 
-// load the image and resize it to a smaller factor so that
-// the shapes can be approximated better
-const mat = cv.imread('./images/shapes.jpg')
-const resized = imutils.resize(image, 300)
-const ratio = image.shape[0] / float(resized.shape[0])
- 
-// convert the resized image to grayscale, blur it slightly,
-// and threshold it
-const gray = cv.cvtColor(resized, cv.COLOR_BGR2GRAY)
-const blurred = cv.GaussianBlur(gray, (5, 5), 0)
-const thresh = cv.threshold(blurred, 60, 255, cv.THRESH_BINARY)[1]
- 
-// find contours in the thresholded image
-let cnts = cv.findContours(thresh.copy(), cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE)
+// Resize and blur
+const processed = image.resize(300, 300).gaussianBlur(new cv.Size(5,5), 0)
 
+// We want to select only the red shapes
+const redUp = processed.cvtColor(cv.COLOR_BGR2HSV).inRange(lowRed_mask_up, highRed_mask_up)
+const redLow = processed.cvtColor(cv.COLOR_BGR2HSV).inRange(lowRed_mask_down, highRed_mask_down)
+const red = redUp.bitwiseOr(redLow)
+
+// DEBUG
+cv.imshowWait('resized and blurred', processed)
+cv.imshowWait('red mask', red)
+
+// find contours in the processed image and display info about them
+let contours = red.findContours(cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE)
+console.log(`Found ${contours.length} contours:`)
+contours.map(c => {
+    console.log(`${c.numPoints} points with area ${c.area}`)
+})
 
 ```
-
-
-## Shape detection
-
-Let's start by detecting squares in an image.
-I'm using this nice tutorial (for Python) I found [here](https://www.pyimagesearch.com/2016/02/08/opencv-shape-detection/) to detect shapes.
-
-16509530- 26th of nov 9:30
-Ely 
-
-Forms
-Mariage cert
-Full Birth certs 
-

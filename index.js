@@ -3,21 +3,11 @@ const cv = require('opencv4nodejs')
 const image = cv.imread('./images/shapes_black_background.jpg')
 const image2 = cv.imread('./images/shapes.jpg')
 
-//cv.imshowWait('original', image)
-
-// Following code is to find the shapes on a black background
-// const processed = image
-//     .resize(300, 300)
-//     .cvtColor(cv.COLOR_BGR2GRAY)
-//     .gaussianBlur(new cv.Size(5,5), 0)
-//     .threshold(60, 255, cv.THRESH_BINARY_INV)
-
 // Colours from https://www.bluetin.io/opencv/opencv-color-detection-filtering-python/
 //icol = (36, 202, 59, 71, 255, 255)    // Green
 //icol = (18, 0, 196, 36, 255, 255)  // Yellow
 //icol = (89, 0, 0, 125, 255, 255)  // Blue
 //icol = (0, 100, 80, 10, 255, 255)   // Red
-
 
 function findRedContours (image) {
 
@@ -36,20 +26,20 @@ function findRedContours (image) {
     const redLow = processed.cvtColor(cv.COLOR_BGR2HSV).inRange(lowRed_mask_down, highRed_mask_down)
     const red = redUp.bitwiseOr(redLow)
 
-    // debug
+    // DEBUG
     cv.imshowWait('resized and blurred', processed)
     cv.imshowWait('red mask', red)
 
     // find contours in the processed image
     let contours = red.findContours(cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE)
 
+    // DEBUG
     console.log(`Found ${contours.length} contours:`)
     contours.map(c => {
         console.log(`${c.numPoints} points with area ${c.area}`)
     })
 
     return contours
-
 }
 
 
