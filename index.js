@@ -2,6 +2,7 @@ const cv = require('opencv4nodejs')
 
 const image = cv.imread('./images/shapes_black_background.jpg')
 const image2 = cv.imread('./images/shapes.jpg')
+const cup = cv.imread('./images/me_and_a_cup.jpg')
 
 // Colours from https://www.bluetin.io/opencv/opencv-color-detection-filtering-python/
 //icol = (36, 202, 59, 71, 255, 255)    // Green
@@ -10,38 +11,61 @@ const image2 = cv.imread('./images/shapes.jpg')
 //icol = (0, 100, 80, 10, 255, 255)   // Red
 
 function findRedContours (image) {
-
     // Red is at the upper and lower Hue - we need two masks
     const lowRed_mask_up = new cv.Vec3(170, 100, 100)
     const highRed_mask_up = new cv.Vec3(180, 255, 255)
-
     const lowRed_mask_down = new cv.Vec3(0, 100, 100)
     const highRed_mask_down = new cv.Vec3(15, 255, 255)
-
     // Resize and blur
     const processed = image.resize(300, 300).gaussianBlur(new cv.Size(5,5), 0)
-
-    // We want to select only the red shapes
+    // Find low red and high red and OR the two
     const redUp = processed.cvtColor(cv.COLOR_BGR2HSV).inRange(lowRed_mask_up, highRed_mask_up)
     const redLow = processed.cvtColor(cv.COLOR_BGR2HSV).inRange(lowRed_mask_down, highRed_mask_down)
     const red = redUp.bitwiseOr(redLow)
 
-    // DEBUG
-    cv.imshowWait('resized and blurred', processed)
-    cv.imshowWait('red mask', red)
-
-    // find contours in the processed image
-    let contours = red.findContours(cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE)
-
-    // DEBUG
-    console.log(`Found ${contours.length} contours:`)
-    contours.map(c => {
-        console.log(`${c.numPoints} points with area ${c.area}`)
-    })
-
-    return contours
+    cv.imshowWait('red', red)
+    // return the contours of the red shapes
+    return red.findContours(cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE)
 }
 
+/**
+ * Browse a list of contour and finds the one with the biggest area
+ * @param {Array of Contour} contours
+ * @returns {Contour} the contour with the biggest area 
+ */
+function findBiggestArea (contours) {
+    return contours.reduce((acc, contour) => {
+        if (contour.area > acc.area) {
+            return contour
+        } else {
+            return acc
+        }
+    })
+}
 
-findRedContours(image)
-findRedContours(image2)
+/**
+ * Find the center point of a contour
+ * @param {Contour} contour
+ * @returns {cX, cY} the coordinates of the center 
+ */
+function findCenter (contour) {
+    const m = contour.moments()
+	const cX = Math.round(m.m10 / m.m00)
+    const cY = Math.round(m.m01 / m.m00)
+    return {cX, cY}
+}
+
+// Find the biggest red-ish shape and highlight its center
+function demo (image) {
+    const cont = findRedContours(image)
+    const big = findBiggestArea(cont)
+    const c = findCenter(big)
+    
+    const processed = image.resize(300, 300).gaussianBlur(new cv.Size(5,5), 0)
+    processed.drawCircle(new cv.Point2(c.cX, c.cY), 7, new cv.Vec3(255,255,255))
+    cv.imshowWait('Center 1', processed)
+}
+
+demo(image)
+demo(image2)
+demo(cup)
