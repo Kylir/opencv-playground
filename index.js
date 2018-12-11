@@ -78,8 +78,11 @@ demoImage(cup)
 // DEMO FOR VIDEO CAPTURE
 function demoVideo () {
     const devicePort = 0
-    const wCap = new cv.VideoCapture(devicePort)
-    
+    try {
+        const wCap = new cv.VideoCapture(devicePort)
+    } catch (err) {
+        throw new Error('Error: can\'t open the video. Did you load the driver?\nsudo modprobe bcm2835-v4l2' )
+    }
     while (true) {
         const frame = wCap.read()
         const cont = findRedContours(frame)
