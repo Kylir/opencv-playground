@@ -77,7 +77,7 @@ function demoVideo () {
     
     while (true) {
         const frame = wCap.read()
-        const cont = findRedContours(image)
+        const cont = findRedContours(frame)
         const big = findBiggestArea(cont)
         const c = findCentre(big)
         console.log(`(${c.cX}, ${c.cY})`)

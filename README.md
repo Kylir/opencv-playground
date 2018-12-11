@@ -80,3 +80,13 @@ contours.map(c => {
 })
 
 ```
+
+## Video
+
+```bash
+sudo modprobe bcm2835-v4l2
+```
+
+Creates `/dev/video0`
+
+
