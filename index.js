@@ -1,9 +1,5 @@
 const cv = require('opencv4nodejs')
 
-const image = cv.imread('./images/shapes_black_background.jpg')
-const image2 = cv.imread('./images/shapes.jpg')
-const cup = cv.imread('./images/me_and_a_cup.jpg')
-
 // Colours from https://www.bluetin.io/opencv/opencv-color-detection-filtering-python/
 //icol = (36, 202, 59, 71, 255, 255)    // Green
 //icol = (18, 0, 196, 36, 255, 255)  // Yellow
@@ -23,7 +19,9 @@ function findRedContours (image) {
     const redLow = processed.cvtColor(cv.COLOR_BGR2HSV).inRange(lowRed_mask_down, highRed_mask_down)
     const red = redUp.bitwiseOr(redLow)
 
+    // DEBUG to see the red selection.
     //cv.imshowWait('red', red)
+
     // return the contours of the red shapes
     return red.findContours(cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE)
 }
@@ -34,11 +32,11 @@ function findRedContours (image) {
  * @returns {Contour} the contour with the biggest area 
  */
 function findBiggestArea (contours) {
-    return contours.reduce((acc, contour) => {
-        if (contour.area > acc.area) {
+    return contours.reduce((biggest, contour) => {
+        if (contour.area > biggest.area) {
             return contour
         } else {
-            return acc
+            return biggest
         }
     })
 }
@@ -67,6 +65,10 @@ function demoImage (image) {
 }
 
 /*
+const image = cv.imread('./images/shapes_black_background.jpg')
+const image2 = cv.imread('./images/shapes.jpg')
+const cup = cv.imread('./images/me_and_a_cup.jpg')
+
 demoImage(image)
 demoImage(image2)
 demoImage(cup)
@@ -78,10 +80,14 @@ function demoVideo () {
     while (true) {
         const frame = wCap.read()
         const cont = findRedContours(frame)
-        const big = findBiggestArea(cont)
-        const c = findCentre(big)
-        console.log(`(${c.cX}, ${c.cY})`)
-        //wCap.reset()
+
+        if (cont && (cont.length > 0)) {    
+            const big = findBiggestArea(cont)
+            const c = findCentre(big)
+            console.log(`Biggest red object at position (${c.cX}, ${c.cY}) - Area `)
+        } else {
+            console.log(`No red objects found...`)
+        }
     }
 
 }
