@@ -81,7 +81,7 @@ function demoVideo () {
         const big = findBiggestArea(cont)
         const c = findCentre(big)
         console.log(`(${c.cX}, ${c.cY})`)
-        wCap.reset()
+        //wCap.reset()
     }
 
 }
