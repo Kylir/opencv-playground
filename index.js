@@ -23,7 +23,7 @@ function findRedContours (image) {
     const redLow = processed.cvtColor(cv.COLOR_BGR2HSV).inRange(lowRed_mask_down, highRed_mask_down)
     const red = redUp.bitwiseOr(redLow)
 
-    cv.imshowWait('red', red)
+    //cv.imshowWait('red', red)
     // return the contours of the red shapes
     return red.findContours(cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE)
 }
@@ -48,7 +48,7 @@ function findBiggestArea (contours) {
  * @param {Contour} contour
  * @returns {cX, cY} the coordinates of the center 
  */
-function findCenter (contour) {
+function findCentre (contour) {
     const m = contour.moments()
 	const cX = Math.round(m.m10 / m.m00)
     const cY = Math.round(m.m01 / m.m00)
@@ -56,16 +56,34 @@ function findCenter (contour) {
 }
 
 // Find the biggest red-ish shape and highlight its center
-function demo (image) {
+function demoImage (image) {
     const cont = findRedContours(image)
     const big = findBiggestArea(cont)
-    const c = findCenter(big)
+    const c = findCentre(big)
     
     const processed = image.resize(300, 300).gaussianBlur(new cv.Size(5,5), 0)
     processed.drawCircle(new cv.Point2(c.cX, c.cY), 7, new cv.Vec3(255,255,255))
     cv.imshowWait('Center 1', processed)
 }
 
-demo(image)
-demo(image2)
-demo(cup)
+/*
+demoImage(image)
+demoImage(image2)
+demoImage(cup)
+*/
+function demoVideo () {
+    const devicePort = 0
+    const wCap = new cv.VideoCapture(devicePort)
+    
+    while (true) {
+        const frame = wCap.read()
+        const cont = findRedContours(image)
+        const big = findBiggestArea(cont)
+        const c = findCentre(big)
+        console.log(`(${c.cX}, ${c.cY})`)
+        wCap.reset()
+    }
+
+}
+
+demoVideo()
