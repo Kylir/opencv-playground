@@ -53,6 +53,8 @@ function findCentre (contour) {
     return {cX, cY}
 }
 
+/*
+// DEMO for static images
 // Find the biggest red-ish shape and highlight its center
 function demoImage (image) {
     const cont = findRedContours(image)
@@ -64,7 +66,6 @@ function demoImage (image) {
     cv.imshowWait('Center 1', processed)
 }
 
-/*
 const image = cv.imread('./images/shapes_black_background.jpg')
 const image2 = cv.imread('./images/shapes.jpg')
 const cup = cv.imread('./images/me_and_a_cup.jpg')
@@ -73,6 +74,8 @@ demoImage(image)
 demoImage(image2)
 demoImage(cup)
 */
+
+// DEMO FOR VIDEO CAPTURE
 function demoVideo () {
     const devicePort = 0
     const wCap = new cv.VideoCapture(devicePort)
@@ -83,13 +86,17 @@ function demoVideo () {
 
         if (cont && (cont.length > 0)) {    
             const big = findBiggestArea(cont)
-            const c = findCentre(big)
-            console.log(`Biggest red object at position (${c.cX}, ${c.cY}) - Area `)
+            if (big.area > 0.1) {
+                const c = findCentre(big)
+                console.log(`${cont.length} red objects. Biggest at (${c.cX}, ${c.cY}) with area ${big.area}`)
+            } else {
+                console.log('Nothing big enough')
+            }
+            
         } else {
             console.log(`No red objects found...`)
         }
     }
-
 }
 
 demoVideo()
