@@ -6,6 +6,17 @@ const cv = require('opencv4nodejs')
 //icol = (89, 0, 0, 125, 255, 255)  // Blue
 //icol = (0, 100, 80, 10, 255, 255)   // Red
 
+function openVideo () {
+    let wCap
+    const devicePort = 0
+    try {
+        wCap = new cv.VideoCapture(devicePort)
+    } catch (err) {
+        throw new Error('Error: can\'t open the video. Did you load the driver?\nsudo modprobe bcm2835-v4l2\n' )
+    }
+    return wCap
+}
+
 function processImage (image) {
     return image.resize(300, 300).gaussianBlur(new cv.Size(5,5), 0)
 }
@@ -133,5 +144,6 @@ function xAxisDeviation (xShape, imageWidth) {
     return (imageWidth/2 - xShape)
 }
 
-module.exports = {processImage, findRedContours, findGreenContours, findBlueContours, findYellowContours, findBiggestArea, findCentre, xAxisDeviation}
+// export all the utility functions
+module.exports = {openVideo, processImage, findRedContours, findGreenContours, findBlueContours, findYellowContours, findBiggestArea, findCentre, xAxisDeviation}
 

@@ -1,5 +1,5 @@
 const cv = require('opencv4nodejs')
-const utils = require('../src/utils')
+const utils = require('../src/opencv-utils')
 
 // DEMO for static images
 // Find the biggest red-ish shape and highlight its center

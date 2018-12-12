@@ -104,4 +104,11 @@ OpenCV is reading the video stream from `/dev/video0`. The driver must be starte
 sudo modprobe bcm2835-v4l2
 ```
 
+## Control a robot
+
+WORK IN PROGRESS
+
+The robot will try to find a red ball and move toward it.
+
+
 
