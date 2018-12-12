@@ -132,3 +132,6 @@ export function findCentre (contour) {
 export function xAxisDeviation (xShape, imageWidth) {
     return (imageWidth/2 - xShape)
 }
+
+export default {processImage, findRedContours, findGreenContours, findBlueContours, findYellowContours, findBiggestArea, findCentre, xAxisDeviation}
+

@@ -8,9 +8,11 @@ The ultimate goal would be to drive a small robot using colour detection.
 
 The project uses the Node module `opencv4node` available [here](https://github.com/justadudewhohacks/opencv4nodejs) to do the binding with OpenCV.
 
+### Windows installation
+
 This module tried to install OpenCV automatically but it failed in my case. So I had to install the Windows version of openCV from the [official reelase website.](https://www.opencv.org/releases.html)
 
-Then the Node module needs to know where to find the different components.
+Then the Node module needed to know where to find the different components.
 I had to set the following environment variables:
 
 ```
@@ -30,6 +32,13 @@ Then I installed the module
 ```
 npm install --save opencv4node
 ```
+
+### Raspberry Pi installation
+
+The installation on the Raspberry was simpler but took 20 times longer!
+
+I had already installed OpenCV on my Pi 3 A+ so I set the environment variable to skip the build of OpenCV and "just" build the binding.
+
 
 ## Getting help
 
@@ -54,6 +63,8 @@ We are using two filters, one filtering very low hues and another one filtering 
 The following script finds the contours of red shapes (including orange ones and some brown ones too...)
 
 ```js
+const image = cv.imread('./images/shapes_black_background.jpg')
+
 const lowRed_mask_up = new cv.Vec3(170, 100, 100)
 const highRed_mask_up = new cv.Vec3(180, 255, 255)
 
@@ -83,10 +94,14 @@ contours.map(c => {
 
 ## Video
 
+WORK IN PROGRESS!
+
+Have a look at `examples/video.js`.
+
+OpenCV is reading the video stream from `/dev/video0`. The driver must be started using the following command:
+
 ```bash
 sudo modprobe bcm2835-v4l2
 ```
-
-Creates `/dev/video0`
 
 
