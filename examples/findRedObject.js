@@ -15,15 +15,16 @@ function demoRobotMove () {
                 const c = cvUtils.findCentre(big)
                 const deviation = cvUtils.xAxisDeviation(c.cX, 300)
                 console.log(`${cont.length} red objects. Biggest at (${c.cX}, ${c.cY}) with area ${big.area}. Deviation to center ${deviation}`)
-                robotUtils.moveForward(50, 50)
+                let {leftPwm, rightPwm} = robotUtils.computePwmWithDeviation(deviation, 50)
+                robotUtils.moveForward(leftPwm, rightPwm)
             } else {
                 console.log('Nothing big enough')
-                robotUtils.circle(50, 50)
+                robotUtils.circle(100, 100)
             }
             
         } else {
             console.log(`No red objects found...`)
-            robotUtils.circle(50, 50)
+            robotUtils.circle(100, 100)
         }
     }
 }

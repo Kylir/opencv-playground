@@ -9,6 +9,12 @@ const bin1 = new Gpio(24, {mode: Gpio.OUTPUT})
 const bin2 = new Gpio(23, {mode: Gpio.OUTPUT})
 const pwmb = new Gpio(25, {mode: Gpio.OUTPUT})
 
+function computePwmWithDeviation (deviation, defaultPwm) {
+    const left = defaultPwm + deviation
+    const right = defaultPwm - deviation
+    return ({ left, right })
+}
+
 function moveForward (pwmLeft, pwmRight) {
     ain1.digitalWrite(0)
     ain2.digitalWrite(1)
@@ -51,4 +57,4 @@ function stop () {
     bin2.digitalWrite(0)
 }
 
-module.exports = {moveForward, moveBackward, circle, stop}
+module.exports = {computePwmWithDeviation, moveForward, moveBackward, circle, stop}
