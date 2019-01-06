@@ -9,7 +9,7 @@ const bin1 = new Gpio(24, {mode: Gpio.OUTPUT})
 const bin2 = new Gpio(23, {mode: Gpio.OUTPUT})
 const pwmb = new Gpio(25, {mode: Gpio.OUTPUT})
 
-function moveForward (pwmLeft, pwmRight) {
+function moveBackward (pwmLeft, pwmRight) {
     ain1.digitalWrite(0)
     ain2.digitalWrite(1)
 
@@ -20,7 +20,7 @@ function moveForward (pwmLeft, pwmRight) {
     pwmb.pwmWrite(pwmRight)
 }
 
-function moveBackward (pwmLeft, pwmRight) {
+function moveForward (pwmLeft, pwmRight) {
     ain1.digitalWrite(1)
     ain2.digitalWrite(0)
 
