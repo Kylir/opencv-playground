@@ -136,7 +136,7 @@ function findCentre (contour) {
 }
 
 /**
- * return the difference between the 
+ * return the difference between the shape and the center of the image 
  * @param {number} xShape
  * @param {number} imageWidth
  */
