@@ -1,9 +1,11 @@
+/* eslint-disable no-console */
 const cvUtils = require('../src/opencv-utils')
 const robotUtils = require('../src/robot-utils')
 
 // DEMO FOR VIDEO CAPTURE
 function demoRobotMove () {
-    let wCap = cvUtils.openVideo()
+    const wCap = cvUtils.openVideo()
+    // eslint-disable-next-line no-constant-condition
     while (true) {
         const frame = wCap.read()
         const processed = cvUtils.processImage(frame)
@@ -24,7 +26,7 @@ function demoRobotMove () {
             }
             
         } else {
-            console.log(`No red objects found...`)
+            console.log('No red objects found...')
             robotUtils.circle(100, 100)
         }
     }

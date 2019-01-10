@@ -1,8 +1,10 @@
+/* eslint-disable no-console */
 const cvUtils = require('../src/opencv-utils')
 
 // DEMO FOR VIDEO CAPTURE
 function demoVideo () {
-    let wCap = cvUtils.openVideo()
+    const wCap = cvUtils.openVideo()
+    // eslint-disable-next-line no-constant-condition
     while (true) {
         const frame = wCap.read()
         const processed = cvUtils.processImage(frame)
@@ -18,7 +20,7 @@ function demoVideo () {
             }
             
         } else {
-            console.log(`No red objects found...`)
+            console.log('No red objects found...')
         }
     }
 }

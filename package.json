@@ -4,7 +4,8 @@
   "description": "Playing with openCV in NodeJS",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "eslint": "eslint ./examples ./src"
   },
   "repository": {
     "type": "git",
@@ -19,5 +20,8 @@
   "dependencies": {
     "opencv4nodejs": "^4.10.0",
     "pigpio": "^1.1.4"
+  },
+  "devDependencies": {
+    "eslint": "^5.10.0"
   }
 }
