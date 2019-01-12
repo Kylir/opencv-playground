@@ -104,11 +104,28 @@ OpenCV is reading the video stream from `/dev/video0`. The driver must be starte
 sudo modprobe bcm2835-v4l2
 ```
 
+Then you can start the demo using:
+
+```bash
+sudo node examples/video.js
+```
+
 ## Control a robot
 
 WORK IN PROGRESS
 
-The robot will try to find a red ball and move toward it.
+To control the robot I'm using the module [pigpio](https://www.npmjs.com/package/pigpio) to send signals to the GPIO. This module is a wrapper for a C library with the same name.
 
+Pins 17, 27 and 22 are for the left motor and pins 24, 23 and 25 are for the right motor.
+
+The demo is using the red object detection code from the section above to find the biggest object in the scene, find it's center and it's distance to the center of the image - what I call the deviation.
+
+The goal is to use this deviation information to move the left and right motor to track the red object and keep it at the center.
+
+To run the demo use the folowing:
+
+```bash
+sudo node examples/findRedObject.js
+```
 
 
