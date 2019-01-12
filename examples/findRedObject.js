@@ -13,8 +13,8 @@ function demoRobotMove () {
 
         if (cont && (cont.length > 0)) {
             const big = cvUtils.findBiggestArea(cont)
-            console.log(`${cont.length} red objects. Biggest at (${cont.cX}, ${cont.cY}) with area ${big.area}.`)
-            if (big.area > 0.1) {
+            console.log(`${cont.length} red objects. Biggest at (${big.cX}, ${big.cY}) with area ${big.area}.`)
+            if (big.area > 1) {
                 const c = cvUtils.findCentre(big)
                 const deviation = cvUtils.xAxisDeviation(c.cX, 300)
                 console.log(`Big enough! Deviation to center is ${deviation}`)
