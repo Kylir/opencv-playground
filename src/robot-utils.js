@@ -1,13 +1,13 @@
 const Gpio = require('pigpio').Gpio
 
-// Motor A
-const ain1 = new Gpio(17, {mode: Gpio.OUTPUT})
-const ain2 = new Gpio(27, {mode: Gpio.OUTPUT})
-const pwma = new Gpio(22, {mode: Gpio.OUTPUT})
-// Motor B
-const bin1 = new Gpio(24, {mode: Gpio.OUTPUT})
-const bin2 = new Gpio(23, {mode: Gpio.OUTPUT})
-const pwmb = new Gpio(25, {mode: Gpio.OUTPUT})
+// Motor A - Left track
+const ain1 = new Gpio(24, {mode: Gpio.OUTPUT})
+const ain2 = new Gpio(23, {mode: Gpio.OUTPUT})
+const pwma = new Gpio(25, {mode: Gpio.OUTPUT})
+// Motor B - right track
+const bin1 = new Gpio(17, {mode: Gpio.OUTPUT})
+const bin2 = new Gpio(27, {mode: Gpio.OUTPUT})
+const pwmb = new Gpio(22, {mode: Gpio.OUTPUT})
 
 // Primitives to stop the robot
 function stopLeft () {
