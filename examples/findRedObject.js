@@ -21,12 +21,12 @@ function demoRobotMove () {
                 //robotUtils.moveForward(50, 50)
             } else {
                 console.log('Nothing big enough. Circling...')
-                //robotUtils.circle(50, 50)
+                //robotUtils.circle(75, 75)
             }
             
         } else {
             console.log('No red objects found. Circling...')
-            //robotUtils.circle(50, 50)
+            //robotUtils.circle(75, 75)
         }
     }
 }
