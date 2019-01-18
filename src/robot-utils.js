@@ -105,8 +105,22 @@ function circle (pwmLeft, pwmRight) {
     pwmb.pwmWrite(pwmRight)
 }
 
+/**
+ * The deviation is the X coordinate in pixel of the center of the biggest red object.
+ * 
+ * A positive deviation means the robot needs to turn right.
+ * But for the robot to turn right I need to move the left track forward 
+ * and the right one backward.
+ * 
+ * Same logic: negative deviation => object on the left
+ * => right track forward and left track backward
+ * @param {number} deviation 
+ */
 function recenter (deviation) {
-    
+    //Do we need to move for small deviations?
+    // if (deviation <= X) { stop() }
+    moveLeft(deviation)
+    moveRight(-deviation)
 }
 
 

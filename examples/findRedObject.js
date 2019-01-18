@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 const cvUtils = require('../src/opencv-utils')
-//const robotUtils = require('../src/robot-utils')
+const robotUtils = require('../src/robot-utils')
 
 // DEMO FOR VIDEO CAPTURE
 function demoRobotMove () {
@@ -14,19 +14,19 @@ function demoRobotMove () {
         if (cont && (cont.length > 0)) {
             const big = cvUtils.findBiggestArea(cont)
             console.log(`${cont.length} red objects. Biggest at (${big.cX}, ${big.cY}) with area ${big.area}.`)
-            if (big.area > 1) {
+            if (big.area > 10) {
                 const c = cvUtils.findCentre(big)
                 const deviation = cvUtils.xAxisDeviation(c.cX, 300)
-                console.log(`Big enough! Deviation to center is ${deviation}`)
-                //robotUtils.moveForward(50, 50)
+                console.log(`Big enough! Recenter! Deviation is ${deviation}`)
+                robotUtils.recenter(deviation)
             } else {
-                console.log('Nothing big enough. Circling...')
-                //robotUtils.circle(75, 75)
+                console.log('Nothing big enough. Stop...')
+                robotUtils.stop()
             }
             
         } else {
-            console.log('No red objects found. Circling...')
-            //robotUtils.circle(75, 75)
+            console.log('No red objects found. Stop...')
+            robotUtils.stop()
         }
     }
 }
