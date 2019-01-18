@@ -9,11 +9,12 @@ function demoRobotMove () {
     while (true) {
         const frame = wCap.read()
         const processed = cvUtils.processImage(frame)
-        const cont = cvUtils.findRedContours(processed)
-
+        //const cont = cvUtils.findRedContours(processed)
+        const cont = cvUtils.findBlueContours(processed)
+        
         if (cont && (cont.length > 0)) {
             const big = cvUtils.findBiggestArea(cont)
-            console.log(`${cont.length} red objects. Biggest at (${big.cX}, ${big.cY}) with area ${big.area}.`)
+            console.log(`${cont.length} red objects. Biggest at (${cont.cX}, ${cont.cY}) with area ${big.area}.`)
             if (big.area > 5) {
                 const c = cvUtils.findCentre(big)
                 const deviation = cvUtils.xAxisDeviation(c.cX, 300)
