@@ -14,19 +14,19 @@ function demoRobotMove () {
         
         if (cont && (cont.length > 0)) {
             const big = cvUtils.findBiggestArea(cont)
-            //console.log(`${cont.length} objects. Biggest at (${cont.cX}, ${cont.cY}) with area ${big.area}.`)
+            console.log(`${cont.length} objects. Biggest at (${cont.cX}, ${cont.cY}) with area ${big.area}.`)
             if (big.area > 5) {
                 const c = cvUtils.findCentre(big)
                 const deviation = cvUtils.xAxisDeviation(c.cX, 300)
                 console.log(`Big enough! Recenter! Deviation is ${deviation}`)
                 robotUtils.recenter(deviation)
             } else {
-                //console.log('Nothing big enough. Stop...')
+                console.log('Nothing big enough. Stop...')
                 robotUtils.stop()
             }
             
         } else {
-            //console.log('No objects found. Stop...')
+            console.log('No objects found. Stop...')
             robotUtils.stop()
         }
     }
