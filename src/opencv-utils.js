@@ -41,7 +41,7 @@ function findRedContours (image, debug) {
 
     // DEBUG to see the red selection.
     if (debug) {
-        cv.imshowWait('Filered image', red)
+        cv.imshowWait('Filtered image', red)
     }
     // return the contours of the red shapes
     return red.findContours(cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE)
@@ -60,7 +60,7 @@ function findGreenContours (image, debug) {
     
     // DEBUG to see the filter.
     if (debug) {
-        cv.imshowWait('Filered image', green)
+        cv.imshowWait('Filtered image', green)
     }
     
     // return the contours of the shapes
@@ -80,7 +80,7 @@ function findBlueContours (image, debug) {
     
     // DEBUG to see the filter.
     if (debug) {
-        cv.imshowWait('Filered image', blue)
+        cv.imshowWait('Filtered image', blue)
     }
     
     // return the contours of the shapes
@@ -100,7 +100,7 @@ function findYellowContours (image, debug) {
     
     // DEBUG to see the filter.
     if (debug) {
-        cv.imshowWait('Filered image', yellow)
+        cv.imshowWait('Filtered image', yellow)
     }
     
     // return the contours of the shapes
