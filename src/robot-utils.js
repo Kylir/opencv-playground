@@ -48,7 +48,7 @@ function moveLeft (pwm) {
     if (pwm === 0) {
         stopLeft()
     } else if (pwm > 0) {
-        moveLeftForward(pwm)        
+        moveLeftForward(pwm)
     } else {
         moveLeftBackward(-pwm)
     }
@@ -77,21 +77,23 @@ function moveRight (pwm) {
     if (pwm === 0) {
         stopRight()
     } else if (pwm > 0) {
-        moveRightForward(pwm)        
+        moveRightForward(pwm)
     } else {
         moveRightBackward(-pwm)
     }
 }
 
-function moveBackward (pwmLeft, pwmRight) {
-    ain1.digitalWrite(1)
-    ain2.digitalWrite(0)
+/**
+ * Will move forward and will try to compensate the deviation
+ * @param {*} pwm 
+ * @param {*} deviation 
+ */
+function moveToTarget (pwm, deviation, maxDeviation) {
+    const correctionFactor = deviation / maxDeviation
+    
+    moveLeft( pwm * ( 1 + correctionFactor) )
+    moveRight( pwm * ( 1 + correctionFactor) )
 
-    bin1.digitalWrite(1)
-    bin2.digitalWrite(0)
-
-    pwma.pwmWrite(pwmLeft)
-    pwmb.pwmWrite(pwmRight)
 }
 
 function circle (pwmLeft, pwmRight) {
