@@ -23,15 +23,15 @@ function demoRobotMove (colorName) {
                 const c = cvUtils.findCentre(big)
                 const deviation = cvUtils.xAxisDeviation(c.cX, 300)
                 console.log(`Big enough! Recenter! Deviation is ${deviation}`)
-                robotUtils.moveToTarget(100, deviation, 0.2)
+                //robotUtils.moveToTarget(100, deviation, 0.2)
             } else {
                 console.log('Nothing big enough. Stop...')
-                robotUtils.stop()
+                //robotUtils.stop()
             }
             
         } else {
             console.log('No objects found. Stop...')
-            robotUtils.stop()
+            //robotUtils.stop()
         }
     }
 }
