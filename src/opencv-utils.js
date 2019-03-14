@@ -107,6 +107,21 @@ function findYellowContours (image, debug) {
     return yellow.findContours(cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE)
 }
 
+/**
+ * The generic function to call the color specific ones
+ * @param {*} image The image to analyze
+ * @param {String} colorName The name of the color (red, blue, yellow, green)
+ * @param {Boolean} debug set it to true to display the images of the contours
+ */
+function findContoursForColor (image, colorName, debug) {
+    switch (colorName) {
+        case 'red': return findRedContours(image, debug)
+        case 'blue': return findBlueContours(image, debug)
+        case 'yellow': return findYellowContours(image, debug)
+        case 'green': return findGreenContours(image, debug)
+        default: break;
+    }
+}
 
 /**
  * Browse a list of contour and finds the one with the biggest area
@@ -145,5 +160,5 @@ function xAxisDeviation (xShape, imageWidth) {
 }
 
 // export all the utility functions
-module.exports = {openVideo, processImage, findRedContours, findGreenContours, findBlueContours, findYellowContours, findBiggestArea, findCentre, xAxisDeviation}
+module.exports = {openVideo, processImage, findRedContours, findGreenContours, findBlueContours, findYellowContours, findContoursForColor, findBiggestArea, findCentre, xAxisDeviation}
 

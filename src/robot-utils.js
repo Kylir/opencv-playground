@@ -48,7 +48,7 @@ function moveLeft (pwm) {
     if (pwm === 0) {
         stopLeft()
     } else if (pwm > 0) {
-        moveLeftForward(pwm)        
+        moveLeftForward(pwm)
     } else {
         moveLeftBackward(-pwm)
     }
@@ -77,23 +77,28 @@ function moveRight (pwm) {
     if (pwm === 0) {
         stopRight()
     } else if (pwm > 0) {
-        moveRightForward(pwm)        
+        moveRightForward(pwm)
     } else {
         moveRightBackward(-pwm)
     }
 }
 
-function moveBackward (pwmLeft, pwmRight) {
-    ain1.digitalWrite(1)
-    ain2.digitalWrite(0)
-
-    bin1.digitalWrite(1)
-    bin2.digitalWrite(0)
-
-    pwma.pwmWrite(pwmLeft)
-    pwmb.pwmWrite(pwmRight)
+/**
+ * Will move forward and will try to compensate the deviation
+ * @param {Number} pwm The base speed of the robot
+ * @param {Number} deviation The distance of the target to the center of the image on the X axis
+ * @param {Number} k An adjustment factor to compensate more or less the "recentering"
+ */
+function moveToTarget (pwm, deviation, k) {
+    moveLeft( pwm + (k * deviation) )
+    moveRight( pwm - (k * deviation) )
 }
 
+/**
+ * Make the robot on itself.
+ * @param {Number} pwmLeft The speed on the left motor
+ * @param {Number} pwmRight The speed on the right motor
+ */
 function circle (pwmLeft, pwmRight) {
     ain1.digitalWrite(1)
     ain2.digitalWrite(0)
@@ -124,4 +129,4 @@ function recenter (deviation) {
 }
 
 
-module.exports = {moveLeft, moveLeftForward, moveLeftBackward, moveRight, moveRightForward, moveRightBackward, moveBackward, circle, stopLeft, stopRight, stop, recenter}
+module.exports = {moveLeft, moveLeftForward, moveLeftBackward, moveRight, moveRightForward, moveRightBackward, circle, stopLeft, stopRight, stop, recenter, moveToTarget}
