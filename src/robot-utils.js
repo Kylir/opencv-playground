@@ -85,17 +85,20 @@ function moveRight (pwm) {
 
 /**
  * Will move forward and will try to compensate the deviation
- * @param {*} pwm 
- * @param {*} deviation 
+ * @param {Number} pwm The base speed of the robot
+ * @param {Number} deviation The distance of the target to the center of the image on the X axis
+ * @param {Number} k An adjustment factor to compensate more or less the "recentering"
  */
-function moveToTarget (pwm, deviation, maxDeviation) {
-    const correctionFactor = deviation / maxDeviation
-    
-    moveLeft( pwm * ( 1 + correctionFactor) )
-    moveRight( pwm * ( 1 + correctionFactor) )
-
+function moveToTarget (pwm, deviation, k) {
+    moveLeft( pwm + (k * deviation) )
+    moveRight( pwm - (k * deviation) )
 }
 
+/**
+ * Make the robot on itself.
+ * @param {Number} pwmLeft The speed on the left motor
+ * @param {Number} pwmRight The speed on the right motor
+ */
 function circle (pwmLeft, pwmRight) {
     ain1.digitalWrite(1)
     ain2.digitalWrite(0)
@@ -126,4 +129,4 @@ function recenter (deviation) {
 }
 
 
-module.exports = {moveLeft, moveLeftForward, moveLeftBackward, moveRight, moveRightForward, moveRightBackward, moveBackward, circle, stopLeft, stopRight, stop, recenter}
+module.exports = {moveLeft, moveLeftForward, moveLeftBackward, moveRight, moveRightForward, moveRightBackward, circle, stopLeft, stopRight, stop, recenter, moveToTarget}
