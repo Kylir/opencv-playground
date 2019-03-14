@@ -1,12 +1,12 @@
 {
-    "blue_low": [89, 0, 0],
+    "blue_low": [89, 150, 150],
     "blue_high": [125, 255, 255],
-    "green_low": [36, 202, 59],
+    "green_low": [36, 150, 150],
     "green_high": [71, 255, 255],
-    "yellow_low": [18, 0, 196],
+    "yellow_low": [18, 150, 150],
     "yellow_high": [36, 255, 255],
-    "redUp_low": [170, 100, 100],
+    "redUp_low": [170, 150, 150],
     "redUp_high": [180, 255, 255],
-    "redDown_low": [0, 100, 100],
+    "redDown_low": [0, 150, 150],
     "redDown_high": [15, 255, 255]  
 }
