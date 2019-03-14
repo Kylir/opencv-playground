@@ -122,6 +122,7 @@ function findContoursForColor (image, colorName, debug) {
         case 'green': return findGreenContours(image, debug)
         default: break;
     }
+    return null;
 }
 
 /**
@@ -136,7 +137,7 @@ function findBiggestArea (contours) {
         } else {
             return biggest
         }
-    })
+    }, {area: 0})
 }
 
 /**
