@@ -1,4 +1,5 @@
 const cv = require('opencv4nodejs')
+const hsvColors = require('../data/colorCalibration.json')
 
 // Colours from https://www.bluetin.io/opencv/opencv-color-detection-filtering-python/
 //icol = (36, 202, 59, 71, 255, 255)    // Green
@@ -74,8 +75,8 @@ function findGreenContours (image, debug) {
  * @returns {Array} the contours of the blue objects
  */
 function findBlueContours (image, debug) {
-    const highBlue_mask = new cv.Vec3(125, 255, 255)
-    const lowBlue_mask = new cv.Vec3(89, 0, 0)
+    const highBlue_mask = new cv.Vec3(...hsvColors.blue_high)
+    const lowBlue_mask = new cv.Vec3(...hsvColors.blue_low)
     const blue = image.cvtColor(cv.COLOR_BGR2HSV).inRange(lowBlue_mask, highBlue_mask)
     
     // DEBUG to see the filter.

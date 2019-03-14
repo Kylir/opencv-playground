@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 const cvUtils = require('../src/opencv-utils')
-const robotUtils = require('../src/robot-utils')
+//const robotUtils = require('../src/robot-utils')
 
 
 function demoRobotMove (colorName) {
