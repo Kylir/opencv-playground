@@ -15,7 +15,7 @@ function demoRobotMove (colorName) {
         if (cont && (cont.length > 0)) {
             const big = cvUtils.findBiggestArea(cont)
             console.log(`${cont.length} objectsdetected.`)
-            console.log(`Big: ${big}`)
+            console.log(`Big: ${JSON.stringify(big)}`)
             console.log(`Biggest at (${big.cX}, ${big.cY}) with area ${big.area}.`)
             
             if (big.area > 500000) {
