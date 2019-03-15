@@ -91,11 +91,11 @@ function moveRight (pwm) {
  */
 function moveToTarget (pwm, deviation, k) {
     console.log(`pwm=${pwm}, deviation=${deviation}, k=${k}`)
-    console.log(`moveLeft( ${pwm + (k * deviation)} )`)
-    console.log(`moveRight( ${pwm - (k * deviation)} )`)
+    console.log(`moveLeft( ${Math.floor(pwm + (k * deviation))} )`)
+    console.log(`moveRight( ${Math.floor(pwm - (k * deviation))} )`)
     
-    moveLeft( pwm + (k * deviation) )
-    moveRight( pwm - (k * deviation) )
+    moveLeft( Math.floor(pwm + (k * deviation)) )
+    moveRight( Math.floor(pwm - (k * deviation)) )
 }
 
 /**
