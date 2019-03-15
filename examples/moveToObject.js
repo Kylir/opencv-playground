@@ -37,4 +37,4 @@ function demoRobotMove (colorName) {
     }
 }
 
-demoRobotMove('blue')
+demoRobotMove('red')
