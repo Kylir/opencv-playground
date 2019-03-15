@@ -18,7 +18,7 @@ function demoRobotMove (colorName) {
             
             if (big.area > 500000) {
                 console.log('Too big! Stop...')
-            } else if (big.area > 200) {
+            } else if (big.area > 20) {
                 const c = cvUtils.findCentre(big)
                 const deviation = cvUtils.xAxisDeviation(c.cX, 300)
                 console.log(`Big enough! Recenter! Deviation is ${deviation}`)
