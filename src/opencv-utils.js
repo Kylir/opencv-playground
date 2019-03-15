@@ -149,7 +149,6 @@ function findCentre (contour) {
     const m = contour.moments()
 	const cX = Math.round(m.m10 / m.m00)
     const cY = Math.round(m.m01 / m.m00)
-    console.log(cX, cY)
     return {cX, cY}
 }
 
