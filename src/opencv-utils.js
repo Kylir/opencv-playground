@@ -31,10 +31,10 @@ function processImage (image) {
  */
 function findRedContours (image, debug) {
     // Red is at the upper and lower Hue - we need two masks
-    const lowRed_mask_up = new cv.Vec3(170, 100, 100)
-    const highRed_mask_up = new cv.Vec3(180, 255, 255)
-    const lowRed_mask_down = new cv.Vec3(0, 100, 100)
-    const highRed_mask_down = new cv.Vec3(15, 255, 255)
+    const lowRed_mask_up = new cv.Vec3(...hsvColors.redUp_low)
+    const highRed_mask_up = new cv.Vec3(...hsvColors.redUp_high)
+    const lowRed_mask_down = new cv.Vec3(...hsvColors.redDown_low)
+    const highRed_mask_down = new cv.Vec3(...hsvColors.redDown_high)
     // Find low red and high red and OR the two
     const redUp = image.cvtColor(cv.COLOR_BGR2HSV).inRange(lowRed_mask_up, highRed_mask_up)
     const redLow = image.cvtColor(cv.COLOR_BGR2HSV).inRange(lowRed_mask_down, highRed_mask_down)
@@ -55,8 +55,8 @@ function findRedContours (image, debug) {
  * @returns {Array} the contours of the Green objects
  */
 function findGreenContours (image, debug) {
-    const highGreen_mask = new cv.Vec3(71, 255, 255)
-    const lowGreen_mask = new cv.Vec3(36, 202, 59)
+    const highGreen_mask = new cv.Vec3(...hsvColors.green_high)
+    const lowGreen_mask = new cv.Vec3(...hsvColors.green_low)
     const green = image.cvtColor(cv.COLOR_BGR2HSV).inRange(lowGreen_mask, highGreen_mask)
     
     // DEBUG to see the filter.
@@ -95,8 +95,8 @@ function findBlueContours (image, debug) {
  * @returns {Array} the contours of the Yellow objects
  */
 function findYellowContours (image, debug) {
-    const highYellow_mask = new cv.Vec3(36, 255, 255)
-    const lowYellow_mask = new cv.Vec3(18, 0, 196)
+    const highYellow_mask = new cv.Vec3(...hsvColors.yellow_high)
+    const lowYellow_mask = new cv.Vec3(...hsvColors.yellow_low)
     const yellow = image.cvtColor(cv.COLOR_BGR2HSV).inRange(lowYellow_mask, highYellow_mask)
     
     // DEBUG to see the filter.
@@ -137,7 +137,7 @@ function findBiggestArea (contours) {
         } else {
             return biggest
         }
-    }, {area: 0})
+    })
 }
 
 /**
@@ -149,6 +149,7 @@ function findCentre (contour) {
     const m = contour.moments()
 	const cX = Math.round(m.m10 / m.m00)
     const cY = Math.round(m.m01 / m.m00)
+    console.log(cX, cY)
     return {cX, cY}
 }
 

@@ -17,7 +17,7 @@ function demoRobotMove (colorName) {
             console.log(`${cont.length} objectsdetected.`)
             console.log(`Biggest at (${big.cX}, ${big.cY}) with area ${big.area}.`)
             
-            if (big.area > 500) {
+            if (big.area > 500000) {
                 console.log('Too big! Stop...')
             } else if (big.area > 15) {
                 const c = cvUtils.findCentre(big)
