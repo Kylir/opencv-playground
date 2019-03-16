@@ -27,14 +27,14 @@ function stop () {
 
 // Move LEFT
 function moveLeftForward (pwm) {
-    ain1.digitalWrite(0)
-    ain2.digitalWrite(1)
+    ain1.digitalWrite(1)
+    ain2.digitalWrite(0)
     pwma.pwmWrite(pwm)
 }
 
 function moveLeftBackward (pwm) {
-    ain1.digitalWrite(1)
-    ain2.digitalWrite(0)
+    ain1.digitalWrite(0)
+    ain2.digitalWrite(1)
     pwma.pwmWrite(pwm)
 }
 
@@ -56,14 +56,14 @@ function moveLeft (pwm) {
 
 // Move RIGHT
 function moveRightForward (pwm) {
-    bin1.digitalWrite(0)
-    bin2.digitalWrite(1)
+    bin1.digitalWrite(1)
+    bin2.digitalWrite(0)
     pwmb.pwmWrite(pwm)
 }
 
 function moveRightBackward (pwm) {
-    bin1.digitalWrite(1)
-    bin2.digitalWrite(0)
+    bin1.digitalWrite(0)
+    bin2.digitalWrite(1)
     pwmb.pwmWrite(pwm)
 }
 
