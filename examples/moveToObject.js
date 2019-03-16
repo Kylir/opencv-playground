@@ -35,4 +35,4 @@ function demoRobotMove (colorName) {
     }
 }
 
-demoRobotMove('red')
+demoRobotMove('green')
