@@ -94,8 +94,8 @@ function moveToTarget (pwm, deviation, k) {
     console.log(`moveLeft( ${Math.floor(pwm + (k * deviation))} )`)
     console.log(`moveRight( ${Math.floor(pwm - (k * deviation))} )`)
     
-    moveLeft( Math.floor(pwm + (k * deviation)) )
-    moveRight( Math.floor(pwm - (k * deviation)) )
+    moveRight( Math.floor(pwm + (k * deviation)) )
+    moveLeft( Math.floor(pwm - (k * deviation)) )
 }
 
 /**
