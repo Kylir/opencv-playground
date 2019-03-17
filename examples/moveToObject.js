@@ -57,12 +57,12 @@ function searchForColor (colorName, video) {
                 isColorFound = true
             } else {
                 console.log('Nothing big enough. Keep searching...')
-                robotUtils.circle(30, -30)
+                robotUtils.circle(30, 30)
             }
             
         } else {
             console.log('No objects found. Keep searching...')
-            robotUtils.circle(30, -30)
+            robotUtils.circle(30, 30)
         }
     }
 
