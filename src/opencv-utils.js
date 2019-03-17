@@ -18,18 +18,26 @@ function openVideo () {
     return wCap
 }
 
+/**
+ * Save an image on the disk.
+ * @param {String} path where to save
+ * @param {*} image The opencv image to save
+ */
+function saveImage (path, image) {
+    try {
+        cv.imwrite(path, image)
+        return 0
+    } catch (err) {
+        console.log(err)
+        return 1
+    }
+}
+
 function processImage (image) {
     return image.resize(300, 300).gaussianBlur(new cv.Size(5,5), 0)
 }
 
-/**
- * Find the contours of the red shapes in an image.
- * Uses two masks.
- * @param {Mat} image
- * @param {boolean} debug optional - wil open the filtered image if set to true
- * @returns {Array} the contours of the red objects
- */
-function findRedContours (image, debug) {
+function applyRedMask (image) {
     // Red is at the upper and lower Hue - we need two masks
     const lowRed_mask_up = new cv.Vec3(...hsvColors.redUp_low)
     const highRed_mask_up = new cv.Vec3(...hsvColors.redUp_high)
@@ -39,13 +47,28 @@ function findRedContours (image, debug) {
     const redUp = image.cvtColor(cv.COLOR_BGR2HSV).inRange(lowRed_mask_up, highRed_mask_up)
     const redLow = image.cvtColor(cv.COLOR_BGR2HSV).inRange(lowRed_mask_down, highRed_mask_down)
     const red = redUp.bitwiseOr(redLow)
+    return red
+}
 
-    // DEBUG to see the red selection.
-    if (debug) {
-        cv.imshowWait('Filtered image', red)
-    }
+/**
+ * Find the contours of the red shapes in an image.
+ * Uses two masks.
+ * @param {Mat} image
+ * @param {boolean} debug optional - wil open the filtered image if set to true
+ * @returns {Array} the contours of the red objects
+ */
+function findRedContours (image) {
+    const red = applyRedMask(image)
     // return the contours of the red shapes
     return red.findContours(cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE)
+}
+
+
+function applyGreenMask (image) {
+    const highGreen_mask = new cv.Vec3(...hsvColors.green_high)
+    const lowGreen_mask = new cv.Vec3(...hsvColors.green_low)
+    const green = image.cvtColor(cv.COLOR_BGR2HSV).inRange(lowGreen_mask, highGreen_mask)
+    return green
 }
 
 /**
@@ -54,18 +77,18 @@ function findRedContours (image, debug) {
  * @param {boolean} debug Optional parameter. if set to true it will try to open the result of the filter
  * @returns {Array} the contours of the Green objects
  */
-function findGreenContours (image, debug) {
-    const highGreen_mask = new cv.Vec3(...hsvColors.green_high)
-    const lowGreen_mask = new cv.Vec3(...hsvColors.green_low)
-    const green = image.cvtColor(cv.COLOR_BGR2HSV).inRange(lowGreen_mask, highGreen_mask)
-    
-    // DEBUG to see the filter.
-    if (debug) {
-        cv.imshowWait('Filtered image', green)
-    }
-    
+function findGreenContours (image) {
+    const green = applyGreenMask(image)
     // return the contours of the shapes
     return green.findContours(cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE)
+}
+
+
+function applyBlueMask (image) {
+    const highBlue_mask = new cv.Vec3(...hsvColors.blue_high)
+    const lowBlue_mask = new cv.Vec3(...hsvColors.blue_low)
+    const blue = image.cvtColor(cv.COLOR_BGR2HSV).inRange(lowBlue_mask, highBlue_mask)
+    return blue
 }
 
 /**
@@ -74,18 +97,18 @@ function findGreenContours (image, debug) {
  * @param {boolean} debug Optional parameter. if set to true it will try to open the result of the filter
  * @returns {Array} the contours of the blue objects
  */
-function findBlueContours (image, debug) {
-    const highBlue_mask = new cv.Vec3(...hsvColors.blue_high)
-    const lowBlue_mask = new cv.Vec3(...hsvColors.blue_low)
-    const blue = image.cvtColor(cv.COLOR_BGR2HSV).inRange(lowBlue_mask, highBlue_mask)
-    
-    // DEBUG to see the filter.
-    if (debug) {
-        cv.imshowWait('Filtered image', blue)
-    }
-    
+function findBlueContours (image) {
+    const blue = applyBlueMask(image)
     // return the contours of the shapes
     return blue.findContours(cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE)
+}
+
+
+function applyYellowMask (image) {
+    const highYellow_mask = new cv.Vec3(...hsvColors.yellow_high)
+    const lowYellow_mask = new cv.Vec3(...hsvColors.yellow_low)
+    const yellow = image.cvtColor(cv.COLOR_BGR2HSV).inRange(lowYellow_mask, highYellow_mask)
+    return yellow
 }
 
 /**
@@ -94,16 +117,8 @@ function findBlueContours (image, debug) {
  * @param {boolean} debug Optional parameter. if set to true it will try to open the result of the filter
  * @returns {Array} the contours of the Yellow objects
  */
-function findYellowContours (image, debug) {
-    const highYellow_mask = new cv.Vec3(...hsvColors.yellow_high)
-    const lowYellow_mask = new cv.Vec3(...hsvColors.yellow_low)
-    const yellow = image.cvtColor(cv.COLOR_BGR2HSV).inRange(lowYellow_mask, highYellow_mask)
-    
-    // DEBUG to see the filter.
-    if (debug) {
-        cv.imshowWait('Filtered image', yellow)
-    }
-    
+function findYellowContours (image) {
+    const yellow = applyYellowMask(image)
     // return the contours of the shapes
     return yellow.findContours(cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE)
 }
@@ -114,12 +129,12 @@ function findYellowContours (image, debug) {
  * @param {String} colorName The name of the color (red, blue, yellow, green)
  * @param {Boolean} debug set it to true to display the images of the contours
  */
-function findContoursForColor (image, colorName, debug) {
+function findContoursForColor (image, colorName) {
     switch (colorName) {
-        case 'red': return findRedContours(image, debug)
-        case 'blue': return findBlueContours(image, debug)
-        case 'yellow': return findYellowContours(image, debug)
-        case 'green': return findGreenContours(image, debug)
+        case 'red': return findRedContours(image)
+        case 'blue': return findBlueContours(image)
+        case 'yellow': return findYellowContours(image)
+        case 'green': return findGreenContours(image)
         default: break;
     }
     return null;
@@ -162,5 +177,21 @@ function xAxisDeviation (xShape, imageWidth) {
 }
 
 // export all the utility functions
-module.exports = {openVideo, processImage, findRedContours, findGreenContours, findBlueContours, findYellowContours, findContoursForColor, findBiggestArea, findCentre, xAxisDeviation}
+module.exports = {
+    openVideo,
+    processImage,
+    saveImage,
+    applyBlueMask,
+    applyGreenMask,
+    applyRedMask,
+    applyYellowMask,
+    findRedContours,
+    findGreenContours,
+    findBlueContours,
+    findYellowContours,
+    findContoursForColor,
+    findBiggestArea,
+    findCentre,
+    xAxisDeviation
+}
 
