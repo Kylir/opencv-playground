@@ -56,12 +56,12 @@ function searchForColor (colorName) {
                 isColorFound = true
             } else {
                 console.log('Nothing big enough. Keep searching...')
-                robotUtils.circle(50, -50)
+                robotUtils.circle(30, -30)
             }
             
         } else {
             console.log('No objects found. Keep searching...')
-            robotUtils.circle(50, -50)
+            robotUtils.circle(30, -30)
         }
     }
 
