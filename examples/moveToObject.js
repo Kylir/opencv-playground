@@ -3,12 +3,12 @@ const cvUtils = require('../src/opencv-utils')
 const robotUtils = require('../src/robot-utils')
 
 
-function goToColor (colorName) {
-    const wCap = cvUtils.openVideo()
+function goToColor (colorName, video) {
+    console.log(`Starting to go to color ${colorName}`)
     let isColorReached = false
     // eslint-disable-next-line no-constant-condition
     while (!isColorReached) {
-        const frame = wCap.read()
+        const frame = video.read()
         const processed = cvUtils.processImage(frame)
         const cont = cvUtils.findContoursForColor(processed, colorName)
         
@@ -37,12 +37,12 @@ function goToColor (colorName) {
     }
 }
 
-function searchForColor (colorName) {
-    const wCap = cvUtils.openVideo()
+function searchForColor (colorName, video) {
+    console.log(`Starting to search for color ${colorName}`)
     let isColorFound = false
     // eslint-disable-next-line no-constant-condition
     while (!isColorFound) {
-        const frame = wCap.read()
+        const frame = video.read()
         const processed = cvUtils.processImage(frame)
         const cont = cvUtils.findContoursForColor(processed, colorName)
         
@@ -53,6 +53,7 @@ function searchForColor (colorName) {
             
             if (big.area > 20) {
                 console.log('Big enough! Color found!')
+                robotUtils.stop()
                 isColorFound = true
             } else {
                 console.log('Nothing big enough. Keep searching...')
@@ -68,6 +69,6 @@ function searchForColor (colorName) {
 
 }
 
-
-searchForColor('green')
-goToColor('green')
+const wCap = cvUtils.openVideo()
+searchForColor('green', wCap)
+goToColor('green', wCap)
