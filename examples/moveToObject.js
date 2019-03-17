@@ -70,5 +70,5 @@ function searchForColor (colorName, video) {
 }
 
 const wCap = cvUtils.openVideo()
-searchForColor('green', wCap)
-goToColor('green', wCap)
+searchForColor('red', wCap)
+goToColor('red', wCap)
