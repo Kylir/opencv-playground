@@ -51,7 +51,7 @@ function searchForColor (colorName, video) {
             console.log(`${cont.length} objectsdetected.`)
             console.log(`Biggest has area ${big.area}.`)
             
-            if (big.area > 20) {
+            if (big.area > 200) {
                 console.log('Big enough! Color found!')
                 robotUtils.stop()
                 isColorFound = true
