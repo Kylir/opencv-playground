@@ -14,29 +14,43 @@
     <meta name="keywords" content="">
     <meta name="description" content="">
 
+    <link rel="stylesheet" href="style.css">
+    <!-- production version, optimized for size and speed -->
+    <script src="https://vuejs.org/js/vue.js"></script>
+
 </head>
 
 <body>
-    <div>
-        <h1>Original</h1>
-        <img src='./original.jpg'>
-    </div>
-    <div>
-        <h1>Blue</h1>
-        <img src='./blue.jpg'>
-    </div>
-    <div>
-        <h1>Green</h1>
-        <img src='./green.jpg'>
-    </div>
-    <div>
-        <h1>Red</h1>
-        <img src='./red.jpg'>
-    </div>
-    <div>
-        <h1>Yellow</h1>
-        <img src='./yellow.jpg'>
+    <div id="app">
+        <div>
+            <span>H </span><input v-model="h">
+            <span>S </span><input v-model="s">
+            <span>V </span><input v-model="v">
+        </div>
+        <div>
+            <button class="button" v-on:click="calibrate">Calibrate</button>
+        </div>
+        <div>
+            <h3>Original</h3>
+            <img src='./original.jpg'>
+        </div>
+        <div>
+            <h3>Blue</h3>
+            <img src='./blue.jpg'>
+        </div>
+        <div>
+            <h3>Green</h3>
+            <img src='./green.jpg'>
+        </div>
+        <div>
+            <h3>Red</h3>
+            <img src='./red.jpg'>
+        </div>
+        <div>
+            <h3>Yellow</h3>
+            <img src='./yellow.jpg'>
+        </div>
     </div>
 </body>
-
+<script src="script.js"></script>
 </html>
