@@ -1,8 +1,8 @@
 {
     "blue_low": [89, 100, 100],
     "blue_high": [125, 255, 255],
-    "green_low": [36, 100, 100],
-    "green_high": [71, 255, 255],
+    "green_low": [40, 50, 50],
+    "green_high": [81, 255, 255],
     "yellow_low": [18, 100, 100],
     "yellow_high": [36, 255, 255],
     "redUp_low": [170, 100, 100],

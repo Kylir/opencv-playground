@@ -15,15 +15,16 @@ function getImageFromCamera () {
     return wCap.read()
 }
 
-function calibration (image, name) {
+function getHSVAtCenter (image) {
     // We will get an image that is 300 x 300
-    const center = new cv.Point2(150, 150)
     const processed = cvUtils.processImage(image)
     const hsv = processed.at(150, 150)
     
-    console.log(`${name} - HSV values at center: ${JSON.stringify(hsv)}`)
-    processed.drawCircle(center, 7, new cv.Vec3(255,255,255))
-
+    return [
+        hsv.x,
+        hsv.y,
+        hsv.z
+    ]
 }
 
 function applyMasksAndSaveImages (image) {
@@ -31,13 +32,6 @@ function applyMasksAndSaveImages (image) {
     const blue = cvUtils.applyBlueMask(image)
     const green = cvUtils.applyGreenMask(image)
     const yellow = cvUtils.applyYellowMask(image)
-
-    cv.imshowWait('red', red)
-    cv.imshowWait('blue', blue)
-    cv.imshowWait('green', green)
-    cv.imshowWait('yellow', yellow)
-
-    console.log(path.resolve(__dirname, '..', 'public', 'red.jpg'))
 
     cvUtils.saveImage(path.resolve(__dirname, '..', 'public', 'red.jpg'), red)
     cvUtils.saveImage(path.resolve(__dirname, '..', 'public', 'blue.jpg'), blue)
@@ -56,6 +50,9 @@ const images = [
     {name: 'me_and_a_cup.jpg', color: 'red'}
 ]
 
-const image = cv.imread(`./images/${images[4].name}`)
+const image = cv.imread(`./images/${images[5].name}`)
 const processed = cvUtils.processImage(image)
+const hsv = getHSVAtCenter(image)
 applyMasksAndSaveImages(processed)
+console.log(hsv)
+
