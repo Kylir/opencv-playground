@@ -69,5 +69,5 @@ function searchForColor (colorName) {
 }
 
 
-searchForColor('red')
-goToColor('red')
+searchForColor('green')
+goToColor('green')

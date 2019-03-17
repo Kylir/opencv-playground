@@ -33,6 +33,7 @@ function applyMasksAndSaveImages (image) {
     const green = cvUtils.applyGreenMask(image)
     const yellow = cvUtils.applyYellowMask(image)
 
+    cvUtils.saveImage(path.resolve(__dirname, '..', 'public', 'original.jpg'), image)
     cvUtils.saveImage(path.resolve(__dirname, '..', 'public', 'red.jpg'), red)
     cvUtils.saveImage(path.resolve(__dirname, '..', 'public', 'blue.jpg'), blue)
     cvUtils.saveImage(path.resolve(__dirname, '..', 'public', 'green.jpg'), green)
