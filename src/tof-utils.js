@@ -75,7 +75,7 @@ function adjustRange (range) {
 }
 
 const address = 0x29
-const bus = initI2cTofSensor()
+const bus = initI2cTofSensor(1)
 const range = readRangeMillimeters(bus, address)
 console.log(range)
 console.log(adjustRange(range))
