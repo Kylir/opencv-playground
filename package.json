@@ -19,6 +19,7 @@
   "homepage": "https://github.com/Kylir/opencv-playground#readme",
   "dependencies": {
     "express": "^4.16.4",
+    "i2c-bus": "^4.0.9",
     "opencv4nodejs": "^4.10.0",
     "pigpio": "^1.1.4"
   },
