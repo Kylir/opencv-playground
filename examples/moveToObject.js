@@ -76,5 +76,12 @@ const address = 0x29
 const busNumber = 1
 const bus = tof.initI2cTofSensor(busNumber, address)
 
+const firstDist = tof.readNTimes(100, bus, address)
+console.log(`First distance is ${firstDist}`)
+
 searchForColor('red', wCap)
 goToColor('red', wCap, bus, address)
+
+setTimeout(() => {
+    console.log('Terminating.')
+}, 1000);
