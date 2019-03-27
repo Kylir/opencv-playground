@@ -9,7 +9,7 @@ const i2c = require('i2c-bus')
 
 // Returns a range reading in millimeters.
 function readRangeMillimeters (i2cBus, address) {
-    let timeout = 10
+    let timeout = 20
     while ( i2cBus.readByteSync(address, 0x13) & 0x07 === 0 ) {
         if (timeout === 0) {
             console.log('TIMEOUT')
@@ -28,15 +28,15 @@ function readRangeMillimeters (i2cBus, address) {
     return range
 }
 
-// Performs 5 readings, remove the crazy ones and do an average 
-function read5Times (i2cBus, address) {
+// Performs N readings, remove the crazy ones and do an average 
+function readNTimes (n, i2cBus, address) {
     let aggrDist = 0
-    for (let i = 0; i <= 5; i+=1) {
+    for (let i = 0; i <= n; i+=1) {
         const d = readRangeMillimeters(i2cBus, address)
-        if ( d < 1200 ) {
-            if ( aggrDist === 0) {
+        if (d < 1200) {
+            if (aggrDist === 0) {
                 aggrDist = d
-            } else {
+            } else if (d !== 0) {
                 aggrDist = Math.floor((aggrDist + d) / 2) 
             }
         }
@@ -60,7 +60,7 @@ function closeI2cTofSensor (i2cBus) {
 
 module.exports = {
     readRangeMillimeters,
-    read5Times,
+    readNTimes,
     initI2cTofSensor,
     closeI2cTofSensor
 }
