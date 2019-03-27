@@ -17,7 +17,7 @@ function goToColor (colorName, video, bus, address) {
             const big = cvUtils.findBiggestArea(cont)
             console.log(`${cont.length} objectsdetected.`)
             console.log(`Biggest has area ${big.area}.`)
-            const dist = tof.readRangeMillimeters(bus, address)
+            const dist = tof.read5Times(bus, address)
             console.log(`Distance to target is ${dist}mm.`)
             if (dist < 100) {
                 console.log('Color Reached! Stop...')
