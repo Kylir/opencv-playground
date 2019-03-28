@@ -83,5 +83,6 @@ searchForColor('red', wCap)
 goToColor('red', wCap, bus, address)
 
 setTimeout(() => {
+    robotUtils.stop()
     console.log('Terminating.')
 }, 1000);

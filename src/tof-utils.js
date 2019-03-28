@@ -19,7 +19,7 @@ function readRangeMillimeters (i2cBus, address) {
     }
     let range = i2cBus.readWordSync(address, (0x14 + 10))
     range = ((range & 0xFF) << 8) | ((range >> 8) & 0xFF)
-    i2cBus.writeByteSync(address, 0x0B, 0x01)
+    //i2cBus.writeByteSync(address, 0x0B, 0x01)
 
     if ((range <= 20) || (range > 1200)) {
         range = 1200
@@ -33,6 +33,7 @@ function readNTimes (n, i2cBus, address) {
     let aggrDist = 0
     for (let i = 0; i <= n; i+=1) {
         const d = readRangeMillimeters(i2cBus, address)
+        console.log(`------------------ ${d}`)
         if (d < 1200) {
             if (aggrDist === 0) {
                 aggrDist = d
