@@ -26,7 +26,7 @@ function goToColor (colorName, video, bus, address) {
                 const c = cvUtils.findCentre(big)
                 const deviation = cvUtils.xAxisDeviation(c.cX, 300)
                 console.log(`Big enough! Recenter! Deviation is ${deviation}`)
-                robotUtils.moveToTarget(80, deviation, 0.5)
+                robotUtils.moveToTarget(30, deviation, 0.5)
             } else {
                 console.log('Nothing big enough. Stop...')
                 robotUtils.stop()

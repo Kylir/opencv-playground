@@ -1,12 +1,20 @@
 const raspi = require('raspi')
 const Serial = require('raspi-serial').Serial
 
+let serial
+
 raspi.init(() => {
-  const serial = new Serial({portId: '/dev/ttyS0'})
+  serial = new Serial({portId: '/dev/ttyS0'})
+  
   serial.open(() => {
     serial.on('data', (data) => {
       process.stdout.write(data)
     })
-    serial.write('s1')
   });
 })
+
+function serialWrite (data) {
+  serial.write(data)
+}
+
+module.exports = { serialWrite }
