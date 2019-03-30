@@ -1,30 +1,45 @@
+/* eslint-disable no-param-reassign */
 /* eslint-disable no-console */
 /* eslint-disable multiline-ternary */
 /* eslint-disable no-ternary */
 /* eslint-disable max-params */
 
-const serial = require('./serial-utils')
+//const serial = require('./serial-utils')
+const raspi = require('raspi')
+const Serial = require('raspi-serial')
 
 const LEFT_SERVO = 0
 const RIGHT_SERVO = 1
 const TREAD = 150.0
 const WHEELBASE = 160.0
 
-// first 
+// first one is right 
+// right servo greater is counter clockwise
 const servo_calibration_data = [
-    {	// right servo greater is counter clockwise
+    {	
         midpos: 310,
         stepsize: 1.7,
         max: 500,
         min: 100
     },
-    {   // left servo
+    {
         midpos: 310,
         stepsize: 1.7,
         max: 500,
         min: 100
     }
 ]
+
+let serial
+
+raspi.init(() => {
+  serial = new Serial({portId: '/dev/ttyS0'})  
+  serial.open(() => {
+    serial.on('data', (data) => {
+      process.stdout.write(data)
+    })
+  });
+})
 
 function uart_send_bytes (buf) {
     serial.serialWrite(buf)
