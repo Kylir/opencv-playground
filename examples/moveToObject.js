@@ -88,11 +88,11 @@ raspi.init(() => {
     serial.open(() => {
             
         //serial.write('a')
-        robotUtils.circle(serial)
+        //robotUtils.circle(serial)
         //piwars.drive(50, 50, serial)
         
         // Red, Blue, Yellow and, finally, Green.
-        //searchForColor('red', wCap, serial)
+        searchForColor('red', wCap, serial)
         // goToColor('red', wCap, bus, address, serial)
 
         //searchForColor('blue', wCap, serial)
