@@ -47,28 +47,30 @@ function searchForColor (colorName, video, serial) {
     let isColorFound = false
     // eslint-disable-next-line no-constant-condition
     while (!isColorFound) {
-        const frame = video.read()
-        const processed = cvUtils.processImage(frame)
-        const cont = cvUtils.findContoursForColor(processed, colorName)
-        
-        if (cont && (cont.length > 0)) {
-            const big = cvUtils.findBiggestArea(cont)
-            console.log(`${cont.length} objectsdetected.`)
-            console.log(`Biggest has area ${big.area}.`)
+        setTimeout(() => {
+            const frame = video.read()
+            const processed = cvUtils.processImage(frame)
+            const cont = cvUtils.findContoursForColor(processed, colorName)
             
-            if (big.area > 200) {
-                console.log('Big enough! Color found!')
-                robotUtils.stop(serial)
-                isColorFound = true
+            if (cont && (cont.length > 0)) {
+                const big = cvUtils.findBiggestArea(cont)
+                console.log(`${cont.length} objectsdetected.`)
+                console.log(`Biggest has area ${big.area}.`)
+                
+                if (big.area > 200) {
+                    console.log('Big enough! Color found!')
+                    robotUtils.stop(serial)
+                    isColorFound = true
+                } else {
+                    console.log('Nothing big enough. Keep searching...')
+                    robotUtils.circle(serial)
+                }
+                
             } else {
-                console.log('Nothing big enough. Keep searching...')
+                console.log('No objects found. Keep searching...')
                 robotUtils.circle(serial)
             }
-            
-        } else {
-            console.log('No objects found. Keep searching...')
-            robotUtils.circle(serial)
-        }
+        },1000)
     }
 }
 
@@ -89,10 +91,10 @@ raspi.init(() => {
             
         //serial.write('a')
         //robotUtils.circle(serial)
-        piwars.drive(50, 50, serial)
+        //piwars.drive(50, 50, serial)
         
         // Red, Blue, Yellow and, finally, Green.
-        //searchForColor('red', wCap, serial)
+        searchForColor('red', wCap, serial)
         //goToColor('red', wCap, bus, address, serial)
 
         //searchForColor('blue', wCap, serial)
