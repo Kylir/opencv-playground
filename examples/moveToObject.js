@@ -7,6 +7,16 @@ const raspi = require('raspi')
 const Serial = require('raspi-serial').Serial
 const piwars = require('../src/piwars-utils')
 
+function sleep(ms) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+}
+  
+async function demo() {
+console.log('Taking a break...');
+await sleep(2000);
+console.log('Two seconds later');
+}
+
 function goToColor (colorName, video, bus, address, serial) {
     console.log(`Starting to go to color ${colorName}`)
     let isColorReached = false
@@ -42,35 +52,35 @@ function goToColor (colorName, video, bus, address, serial) {
     }
 }
 
-function searchForColor (colorName, video, serial) {
+async function searchForColor (colorName, video, serial) {
     console.log(`Starting to search for color ${colorName}`)
     let isColorFound = false
     // eslint-disable-next-line no-constant-condition
     while (!isColorFound) {
-        setTimeout(() => {
-            const frame = video.read()
-            const processed = cvUtils.processImage(frame)
-            const cont = cvUtils.findContoursForColor(processed, colorName)
+        const frame = video.read()
+        const processed = cvUtils.processImage(frame)
+        const cont = cvUtils.findContoursForColor(processed, colorName)
+        
+        if (cont && (cont.length > 0)) {
+            const big = cvUtils.findBiggestArea(cont)
+            console.log(`${cont.length} objectsdetected.`)
+            console.log(`Biggest has area ${big.area}.`)
             
-            if (cont && (cont.length > 0)) {
-                const big = cvUtils.findBiggestArea(cont)
-                console.log(`${cont.length} objectsdetected.`)
-                console.log(`Biggest has area ${big.area}.`)
-                
-                if (big.area > 200) {
-                    console.log('Big enough! Color found!')
-                    robotUtils.stop(serial)
-                    isColorFound = true
-                } else {
-                    console.log('Nothing big enough. Keep searching...')
-                    robotUtils.circle(serial)
-                }
-                
+            if (big.area > 200) {
+                console.log('Big enough! Color found!')
+                robotUtils.stop(serial)
+                isColorFound = true
             } else {
-                console.log('No objects found. Keep searching...')
+                console.log('Nothing big enough. Keep searching...')
                 robotUtils.circle(serial)
             }
-        },1000)
+            
+        } else {
+            console.log('No objects found. Keep searching...')
+            robotUtils.circle(serial)
+        }
+
+        await sleep(100)
     }
 }
 
