@@ -19,7 +19,7 @@ function stop (serial) {
 
 function circle (serial) {
     console.log('Circling...')
-    piwars.drive(20, 0, serial)
+    piwars.drive(50, 0, serial)
 }
 
 module.exports = { moveToTarget, stop, circle }
