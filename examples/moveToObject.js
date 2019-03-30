@@ -93,18 +93,18 @@ raspi.init(() => {
         searchForColor('red', wCap, serial)
         // goToColor('red', wCap, bus, address, serial)
 
-        // searchForColor('blue', wCap, serial)
+        searchForColor('blue', wCap, serial)
         // goToColor('blue', wCap, bus, address, serial)
 
-        // searchForColor('yellow', wCap, serial)
+        searchForColor('yellow', wCap, serial)
         // goToColor('yellow', wCap, bus, address, serial)
 
-        // searchForColor('green', wCap, serial)
+        searchForColor('green', wCap, serial)
         // goToColor('green', wCap, bus, address, serial)
 
-        setTimeout(() => {
-            robotUtils.stop(serial)
-            console.log('Terminating.')
-        }, 1000);
+        // setTimeout(() => {
+        //     robotUtils.stop(serial)
+        //     console.log('Terminating.')
+        // }, 1000);
     })
 })
