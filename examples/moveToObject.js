@@ -107,11 +107,9 @@ raspi.init(() => {
         //piwars.drive(50, 50, serial)
         
         // Red, Blue, Yellow and, finally, Green.
-        searchForColor('red', wCap, serial).then(() => {
-            return goToColor('red', wCap, bus, address, serial)
-        }).then(() => {
-            robotUtils.stop()
-        })
+        searchForColor('red', wCap, serial)
+        .then(() => goToColor('red', wCap, bus, address, serial))
+        .then(() => robotUtils.stop())
 
         //searchForColor('blue', wCap, serial)
         // goToColor('blue', wCap, bus, address, serial)
