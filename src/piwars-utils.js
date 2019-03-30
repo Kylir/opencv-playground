@@ -27,11 +27,8 @@ const servo_calibration_data = [
 ]
 
 function uart_send_bytes (buf, serial) {
-
-    for (let i = 0; i <= buf.length; i++ ) {
-        serial.write(buf[i])
-    }
-
+    const b = Buffer.from(buf)
+    serial.write(b)
 }
 
 function calc_checksum (checksum, value) {
