@@ -28,6 +28,9 @@ const servo_calibration_data = [
 
 function uart_send_bytes (buf, serial) {
     const data = buf.join()
+
+    console.log(`uart: ${data}`)
+
     serial.write(data)
 }
 
