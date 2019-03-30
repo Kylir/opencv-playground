@@ -85,17 +85,15 @@ raspi.init(() => {
     const serial = new Serial({portId: '/dev/ttyS0'})
     
     serial.open(() => {
-
-        setTimeout(() =>{
-            serial.write('Rhaaaaaa')
-        }, 100)
+            
+        serial.write('a')
         
         // serial.on('data', (data) => {
         //     process.stdout.write(data)
         // })
 
         // Red, Blue, Yellow and, finally, Green.
-        // searchForColor('red', wCap, serial)
+        searchForColor('red', wCap, serial)
         // goToColor('red', wCap, bus, address, serial)
 
         // searchForColor('blue', wCap, serial)
