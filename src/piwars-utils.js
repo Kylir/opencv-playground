@@ -60,10 +60,11 @@ function send_cmd (cmd, serial) {
         cs = 0;
 
     data.push(0xa5);
+    data.push(cmd.length);
 
     for (let i = 0; i < cmd.length; i++) {
         add_byte(data, cmd[i]);
-        cs = calc_checksum(cmd[i]);
+        cs = calc_checksum(cs, cmd[i]);
     }
     add_byte(data, cs);
 
