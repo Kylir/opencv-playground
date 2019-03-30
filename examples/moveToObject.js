@@ -109,6 +109,8 @@ raspi.init(() => {
         // Red, Blue, Yellow and, finally, Green.
         searchForColor('red', wCap, serial).then(() => {
             return goToColor('red', wCap, bus, address, serial)
+        }).then(() => {
+            robotUtils.stop()
         })
 
         //searchForColor('blue', wCap, serial)
