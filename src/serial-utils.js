@@ -3,21 +3,10 @@
 // const util = require('util');
 
 // const init = util.promisify(raspi.init)
-// const open = util.promisify()
 
 // function serialInit() {
 
-//   init().then()
-
-//   init(() => {
-//     serial = new Serial({portId: '/dev/ttyS0'})
-    
-//     serial.open().then() => {
-//       serial.on('data', (data) => {
-//         process.stdout.write(data)
-//       })
-//     });
-//   })
+//   return serial
 // }
 
 // function serialWrite (serial, data) {
@@ -47,8 +36,3 @@
 // }
 
 // module.exports = { serialWrite }
-
-
-
-
-

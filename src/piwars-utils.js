@@ -4,10 +4,6 @@
 /* eslint-disable no-ternary */
 /* eslint-disable max-params */
 
-//const serial = require('./serial-utils')
-const raspi = require('raspi')
-const Serial = require('raspi-serial')
-
 const LEFT_SERVO = 0
 const RIGHT_SERVO = 1
 const TREAD = 150.0
@@ -30,19 +26,8 @@ const servo_calibration_data = [
     }
 ]
 
-let serial
-
-raspi.init(() => {
-  serial = new Serial({portId: '/dev/ttyS0'})  
-  serial.open(() => {
-    serial.on('data', (data) => {
-      process.stdout.write(data)
-    })
-  });
-})
-
-function uart_send_bytes (buf) {
-    serial.serial(buf)
+function uart_send_bytes (buf, serial) {
+    serial.write(buf)
 }
 
 function calc_checksum (checksum, value) {
@@ -69,7 +54,7 @@ function add_byte (buf, value) {
     }
 }
 
-function send_cmd (cmd) {
+function send_cmd (cmd, serial) {
     let data = [],
         cs = 0;
 
@@ -80,7 +65,7 @@ function send_cmd (cmd) {
         cs = calc_checksum(cmd[i]);
     }
     add_byte(data, cs);
-    uart_send_bytes(data);
+    uart_send_bytes(data, serial);
 }
 
 function servo_deg_to_val (servo_id, deg) {
@@ -96,7 +81,7 @@ function servo_deg_to_val (servo_id, deg) {
     return value;
 }
 
-function set_motors (angle_right, angle_left, speed_left, speed_right) {
+function set_motors (angle_right, angle_left, speed_left, speed_right, serial) {
     const servo_left_value = servo_deg_to_val(LEFT_SERVO, angle_left),
         servo_right_value = servo_deg_to_val(RIGHT_SERVO, angle_right);
 
@@ -110,7 +95,7 @@ function set_motors (angle_right, angle_left, speed_left, speed_right) {
         (speed_left < 0) ? (-speed_left) | 0x80 : speed_left,
         0,
         0
-    ]);
+    ], serial);
 }
 
 function get_radius_from_diff (diff) {
@@ -130,7 +115,7 @@ function get_outer_angle (R) {
     return (R === -1) ? 0 : Math.round(180.0 * Math.atan(val) / Math.PI);
 }
 
-function drive (speed_right, speed_left) {
+function drive (speed_right, speed_left, serial) {
 
     // right and left to be in teh interval -127 to +127
     if (speed_right < -127) {
@@ -166,7 +151,7 @@ function drive (speed_right, speed_left) {
     console.log(`Servo ${angle_left}, ${angle_right}`);
     console.log(`Speed ${speed_left}, ${speed_right}`);
 
-    set_motors(angle_left, angle_right, speed_left, speed_right);
+    set_motors(angle_left, angle_right, speed_left, speed_right, serial);
 }
 
 

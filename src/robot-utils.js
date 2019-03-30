@@ -2,7 +2,7 @@
 
 let piwars = require('./piwars-utils')
 
-function moveToTarget (baseSpeed, deviation, k) {
+function moveToTarget (baseSpeed, deviation, k, serial) {
     
     const right = Math.floor(baseSpeed + (k * deviation))
     const left = Math.floor(baseSpeed - (k * deviation))
@@ -10,15 +10,15 @@ function moveToTarget (baseSpeed, deviation, k) {
     console.log(`Parameters: baseSpeed=${baseSpeed}, deviation=${deviation}, k=${k}`)
     console.log(`piwars.drive(${right}, ${left})`)
     
-    piwars.drive(right, left)
+    piwars.drive(right, left, serial)
 }
 
-function stop () {
-    piwars.drive(0, 0)
+function stop (serial) {
+    piwars.drive(0, 0, serial)
 }
 
-function circle (pwmLeft, pwmRight) {
-    piwars.drive(50, 0)
+function circle (pwmLeft, pwmRight, serial) {
+    piwars.drive(50, 0, serial)
 }
 
 module.exports = { moveToTarget, stop, circle }

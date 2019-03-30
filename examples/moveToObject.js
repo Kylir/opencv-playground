@@ -3,8 +3,10 @@
 const cvUtils = require('../src/opencv-utils')
 const robotUtils = require('../src/robot-utils')
 const tof = require('../src/tof-utils')
+const raspi = require('raspi')
+const Serial = require('raspi-serial')
 
-function goToColor (colorName, video, bus, address) {
+function goToColor (colorName, video, bus, address, serial) {
     console.log(`Starting to go to color ${colorName}`)
     let isColorReached = false
     // eslint-disable-next-line no-constant-condition
@@ -26,20 +28,20 @@ function goToColor (colorName, video, bus, address) {
                 const c = cvUtils.findCentre(big)
                 const deviation = cvUtils.xAxisDeviation(c.cX, 300)
                 console.log(`Big enough! Recenter! Deviation is ${deviation}`)
-                robotUtils.moveToTarget(30, deviation, 0.5)
+                robotUtils.moveToTarget(30, deviation, 0.5, serial)
             } else {
                 console.log('Nothing big enough. Stop...')
-                robotUtils.stop()
+                robotUtils.stop(serial)
             }
             
         } else {
             console.log('No objects found. Stop...')
-            robotUtils.stop()
+            robotUtils.stop(serial)
         }
     }
 }
 
-function searchForColor (colorName, video) {
+function searchForColor (colorName, video, serial) {
     console.log(`Starting to search for color ${colorName}`)
     let isColorFound = false
     // eslint-disable-next-line no-constant-condition
@@ -55,16 +57,16 @@ function searchForColor (colorName, video) {
             
             if (big.area > 200) {
                 console.log('Big enough! Color found!')
-                robotUtils.stop()
+                robotUtils.stop(serial)
                 isColorFound = true
             } else {
                 console.log('Nothing big enough. Keep searching...')
-                robotUtils.circle(100, 100)
+                robotUtils.circle(100, 100, serial)
             }
             
         } else {
             console.log('No objects found. Keep searching...')
-            robotUtils.circle(100, 100)
+            robotUtils.circle(100, 100, serial)
         }
     }
 }
@@ -79,8 +81,20 @@ const bus = tof.initI2cTofSensor(busNumber, address)
 const firstDist = tof.readNTimes(100, bus, address)
 console.log(`First distance is ${firstDist}`)
 
-searchForColor('red', wCap)
-goToColor('red', wCap, bus, address)
+raspi.init(() => {
+    const serial = new Serial({portId: '/dev/ttyS0'})
+    
+    serial.open(() => {
+    
+        serial.on('data', (data) => {
+            process.stdout.write(data)
+        })
+
+        searchForColor('red', wCap, serial)
+        goToColor('red', wCap, bus, address, serial)
+
+    });
+})
 
 setTimeout(() => {
     robotUtils.stop()
