@@ -21,7 +21,9 @@
     "express": "^4.16.4",
     "i2c-bus": "^4.0.9",
     "opencv4nodejs": "^4.10.0",
-    "pigpio": "^1.1.4"
+    "pigpio": "^1.1.4",
+    "raspi": "^6.0.1",
+    "raspi-serial": "^5.1.1"
   },
   "devDependencies": {
     "eslint": "^5.10.0"

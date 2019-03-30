@@ -20,3 +20,5 @@ function stop () {
 function circle (pwmLeft, pwmRight) {
     piwars.drive(50, 0)
 }
+
+module.exports = { moveToTarget, stop, circle }

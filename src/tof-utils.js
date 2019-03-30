@@ -38,7 +38,7 @@ function readNTimes (n, i2cBus, address) {
             if (aggrDist === 0) {
                 aggrDist = d
             } else if (d !== 0) {
-                aggrDist = Math.floor((aggrDist + d) / 2) 
+                aggrDist = Math.floor((aggrDist + d) / 2)
             }
         }
     }
