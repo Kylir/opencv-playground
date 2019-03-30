@@ -93,7 +93,7 @@ raspi.init(() => {
         
         // Red, Blue, Yellow and, finally, Green.
         searchForColor('red', wCap, serial)
-        // goToColor('red', wCap, bus, address, serial)
+        goToColor('red', wCap, bus, address, serial)
 
         //searchForColor('blue', wCap, serial)
         // goToColor('blue', wCap, bus, address, serial)
@@ -108,5 +108,7 @@ raspi.init(() => {
         //     robotUtils.stop(serial)
         //     console.log('Terminating.')
         // }, 1000);
+        robotUtils.stop(serial)
+
     })
 })
