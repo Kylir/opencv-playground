@@ -10,7 +10,7 @@ function moveToTarget (baseSpeed, deviation, k, serial) {
     console.log(`Parameters: baseSpeed=${baseSpeed}, deviation=${deviation}, k=${k}`)
     console.log(`piwars.drive(${right}, ${left})`)
     
-    piwars.drive(right, left, serial)
+    piwars.drive(left, right, serial)
 }
 
 function stop (serial) {
