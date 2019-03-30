@@ -17,7 +17,7 @@ await sleep(2000);
 console.log('Two seconds later');
 }
 
-function goToColor (colorName, video, bus, address, serial) {
+async function goToColor (colorName, video, bus, address, serial) {
     console.log(`Starting to go to color ${colorName}`)
     let isColorReached = false
     // eslint-disable-next-line no-constant-condition
@@ -49,6 +49,9 @@ function goToColor (colorName, video, bus, address, serial) {
             console.log('No objects found. Stop...')
             robotUtils.stop(serial)
         }
+
+        await sleep(100)
+
     }
 }
 
@@ -104,8 +107,9 @@ raspi.init(() => {
         //piwars.drive(50, 50, serial)
         
         // Red, Blue, Yellow and, finally, Green.
-        searchForColor('red', wCap, serial)
-        goToColor('red', wCap, bus, address, serial)
+        searchForColor('red', wCap, serial).then(() => {
+            return goToColor('red', wCap, bus, address, serial)
+        })
 
         //searchForColor('blue', wCap, serial)
         // goToColor('blue', wCap, bus, address, serial)
