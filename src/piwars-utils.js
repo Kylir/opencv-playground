@@ -42,7 +42,7 @@ raspi.init(() => {
 })
 
 function uart_send_bytes (buf) {
-    serial.serialWrite(buf)
+    serial.serial(buf)
 }
 
 function calc_checksum (checksum, value) {
