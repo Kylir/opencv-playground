@@ -34,7 +34,7 @@ function saveImage (path, image) {
 }
 
 function processImage (image) {
-    return image.resize(300, 300).gaussianBlur(new cv.Size(5,5), 0)
+    return image.resize(300, 300).gaussianBlur(new cv.Size(5,5), 0).equalizeHist()
 }
 
 function applyRedMask (image) {
