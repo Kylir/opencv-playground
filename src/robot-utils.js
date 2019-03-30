@@ -1,6 +1,6 @@
 // New version of the file for the piwars robot
 
-let piwars = require('./piwars-utils')
+const piwars = require('./piwars-utils')
 
 function moveToTarget (baseSpeed, deviation, k, serial) {
     
@@ -17,8 +17,8 @@ function stop (serial) {
     piwars.drive(0, 0, serial)
 }
 
-function circle (pwmLeft, pwmRight, serial) {
-    piwars.drive(50, 50, serial)
+function circle (serial) {
+    piwars.drive(70, 0, serial)
 }
 
 module.exports = { moveToTarget, stop, circle }

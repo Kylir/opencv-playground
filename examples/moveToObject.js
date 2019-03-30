@@ -62,12 +62,12 @@ function searchForColor (colorName, video, serial) {
                 isColorFound = true
             } else {
                 console.log('Nothing big enough. Keep searching...')
-                robotUtils.circle(100, 100, serial)
+                robotUtils.circle(serial)
             }
             
         } else {
             console.log('No objects found. Keep searching...')
-            robotUtils.circle(100, 100, serial)
+            robotUtils.circle(serial)
         }
     }
 }
@@ -88,8 +88,8 @@ raspi.init(() => {
     serial.open(() => {
             
         //serial.write('a')
-        //robotUtils.circle(10, 10, serial)
-        piwars.drive(50, 50, serial)
+        robotUtils.circle(serial)
+        //piwars.drive(50, 50, serial)
         
         // Red, Blue, Yellow and, finally, Green.
         //searchForColor('red', wCap, serial)
