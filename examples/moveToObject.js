@@ -84,34 +84,32 @@ console.log(`First distance is ${firstDist}`)
 raspi.init(() => {
     const serial = new Serial({portId: '/dev/ttyS0'})
     
-    serial.open()
+    serial.open(() => {
 
-    setTimeout(() =>{
-        serial.write('Rhaaaaaa')
-    }, 100)
-    
-    // serial.on('data', (data) => {
-    //     process.stdout.write(data)
-    // })
+        setTimeout(() =>{
+            serial.write('Rhaaaaaa')
+        }, 100)
+        
+        // serial.on('data', (data) => {
+        //     process.stdout.write(data)
+        // })
 
-    // Red, Blue, Yellow and, finally, Green.
-    searchForColor('red', wCap, serial)
-    goToColor('red', wCap, bus, address, serial)
+        // Red, Blue, Yellow and, finally, Green.
+        // searchForColor('red', wCap, serial)
+        // goToColor('red', wCap, bus, address, serial)
 
-    searchForColor('blue', wCap, serial)
-    goToColor('blue', wCap, bus, address, serial)
+        // searchForColor('blue', wCap, serial)
+        // goToColor('blue', wCap, bus, address, serial)
 
-    searchForColor('yellow', wCap, serial)
-    goToColor('yellow', wCap, bus, address, serial)
+        // searchForColor('yellow', wCap, serial)
+        // goToColor('yellow', wCap, bus, address, serial)
 
-    searchForColor('green', wCap, serial)
-    goToColor('green', wCap, bus, address, serial)
+        // searchForColor('green', wCap, serial)
+        // goToColor('green', wCap, bus, address, serial)
 
-    setTimeout(() => {
-        robotUtils.stop(serial)
-        console.log('Terminating.')
-    }, 1000);
-
+        setTimeout(() => {
+            robotUtils.stop(serial)
+            console.log('Terminating.')
+        }, 1000);
+    })
 })
-
-
