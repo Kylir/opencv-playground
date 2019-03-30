@@ -90,8 +90,18 @@ raspi.init(() => {
             process.stdout.write(data)
         })
 
+        // Red, Blue, Yellow and, finally, Green.
         searchForColor('red', wCap, serial)
         goToColor('red', wCap, bus, address, serial)
+
+        searchForColor('blue', wCap, serial)
+        goToColor('blue', wCap, bus, address, serial)
+
+        searchForColor('yellow', wCap, serial)
+        goToColor('yellow', wCap, bus, address, serial)
+
+        searchForColor('green', wCap, serial)
+        goToColor('green', wCap, bus, address, serial)
 
     });
 })
