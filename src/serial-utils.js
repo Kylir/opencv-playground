@@ -14,7 +14,8 @@ raspi.init(() => {
 })
 
 function serialWrite (data) {
-  serial.write(data)
+  const strData = data.join()
+  serial.write(strData)
 }
 
 module.exports = { serialWrite }

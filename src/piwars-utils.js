@@ -10,6 +10,7 @@ const RIGHT_SERVO = 1
 const TREAD = 150.0
 const WHEELBASE = 160.0
 
+// first 
 const servo_calibration_data = [
     {	// right servo greater is counter clockwise
         midpos: 310,
@@ -27,7 +28,6 @@ const servo_calibration_data = [
 
 function uart_send_bytes (buf) {
     serial.serialWrite(buf)
-    // todo: send buf to /dev/ttyS0 here...
 }
 
 function calc_checksum (checksum, value) {
