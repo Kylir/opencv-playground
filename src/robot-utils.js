@@ -18,7 +18,7 @@ function stop (serial) {
 }
 
 function circle (pwmLeft, pwmRight, serial) {
-    piwars.drive(50, 0, serial)
+    piwars.drive(50, 50, serial)
 }
 
 module.exports = { moveToTarget, stop, circle }

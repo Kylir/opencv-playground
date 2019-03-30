@@ -5,6 +5,7 @@ const robotUtils = require('../src/robot-utils')
 const tof = require('../src/tof-utils')
 const raspi = require('raspi')
 const Serial = require('raspi-serial').Serial
+const piwars = require('../src/piwars-utils')
 
 function goToColor (colorName, video, bus, address, serial) {
     console.log(`Starting to go to color ${colorName}`)
@@ -88,18 +89,19 @@ raspi.init(() => {
             
         //serial.write('a')
         //robotUtils.circle(10, 10, serial)
+        piwars.drive(50, 50, serial)
         
         // Red, Blue, Yellow and, finally, Green.
-        searchForColor('red', wCap, serial)
+        //searchForColor('red', wCap, serial)
         // goToColor('red', wCap, bus, address, serial)
 
-        searchForColor('blue', wCap, serial)
+        //searchForColor('blue', wCap, serial)
         // goToColor('blue', wCap, bus, address, serial)
 
-        searchForColor('yellow', wCap, serial)
+        //searchForColor('yellow', wCap, serial)
         // goToColor('yellow', wCap, bus, address, serial)
 
-        searchForColor('green', wCap, serial)
+        //searchForColor('green', wCap, serial)
         // goToColor('green', wCap, bus, address, serial)
 
         // setTimeout(() => {
