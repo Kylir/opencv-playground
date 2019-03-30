@@ -21,7 +21,7 @@ function goToColor (colorName, video, bus, address, serial) {
             console.log(`Biggest has area ${big.area}.`)
             const dist = tof.readNTimes(10, bus, address)
             console.log(`Distance to target is ${dist}mm.`)
-            if (dist < 100 && dist !== 0) {
+            if (dist < 90 && dist !== 0) {
                 console.log('Color Reached! Stop...')
                 isColorReached = true
             } else if (big.area > 20) {
