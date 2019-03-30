@@ -4,7 +4,7 @@ const cvUtils = require('../src/opencv-utils')
 const robotUtils = require('../src/robot-utils')
 const tof = require('../src/tof-utils')
 const raspi = require('raspi')
-const Serial = require('raspi-serial')
+const Serial = require('raspi-serial').Serial
 
 function goToColor (colorName, video, bus, address, serial) {
     console.log(`Starting to go to color ${colorName}`)
