@@ -18,6 +18,7 @@ function stop (serial) {
 }
 
 function circle (serial) {
+    console.log('Circling...')
     piwars.drive(70, 0, serial)
 }
 
