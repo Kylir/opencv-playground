@@ -86,12 +86,9 @@ raspi.init(() => {
     
     serial.open(() => {
             
-        serial.write('a')
+        //serial.write('a')
+        //robotUtils.circle(10, 10, serial)
         
-        // serial.on('data', (data) => {
-        //     process.stdout.write(data)
-        // })
-
         // Red, Blue, Yellow and, finally, Green.
         searchForColor('red', wCap, serial)
         // goToColor('red', wCap, bus, address, serial)
