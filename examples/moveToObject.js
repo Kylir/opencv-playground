@@ -41,13 +41,13 @@ async function goToColor (colorName, video, bus, address, serial) {
                 console.log(`Big enough! Recenter! Deviation is ${deviation}`)
                 robotUtils.moveToTarget(30, deviation, 0.2, serial)
             } else {
-                console.log('Nothing big enough. Stop...')
+                console.log('Nothing big enough. Circling opposite...')
                 robotUtils.circleOpposite(serial)
             }
             
         } else {
-            console.log('No objects found. Stop...')
-            robotUtils.stop(serial)
+            console.log('No objects found. Circling opposite...')
+            robotUtils.circleOpposite(serial)
         }
 
         await sleep(70)
