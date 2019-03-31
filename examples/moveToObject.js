@@ -93,7 +93,7 @@ async function goBack (bus, address, serial) {
     
         const dist = tof.readNTimes(10, bus, address)
         
-        if ( dist >= 300 ) {
+        if ( dist >= 500 ) {
             farEnough = true
         } else {
             robotUtils.back(serial)
