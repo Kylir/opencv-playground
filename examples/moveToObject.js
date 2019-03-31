@@ -126,15 +126,15 @@ raspi.init(() => {
         // Red, Blue, Yellow and, finally, Green.
         searchForColor('red', wCap, serial)
         .then(() => goToColor('red', wCap, bus, address, serial))
-        .then(() => goBack(serial))
+        .then(() => goBack(bus, address, serial))
         
         .then(() => searchForColor('blue', wCap, serial))
         .then(() => goToColor('blue', wCap, bus, address, serial))
-        .then(() => goBack(serial))
+        .then(() => goBack(bus, address, serial))
         
         .then(() => searchForColor('yellow', wCap, serial))
         .then(() => goToColor('yellow', wCap, bus, address, serial))
-        .then(() => goBack(serial))
+        .then(() => goBack(bus, address, serial))
         
         .then(() => searchForColor('green', wCap, serial))
         .then(() => goToColor('green', wCap, bus, address, serial))
