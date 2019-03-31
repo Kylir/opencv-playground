@@ -22,4 +22,9 @@ function circle (serial) {
     piwars.drive(30, 0, serial)
 }
 
+function circleOpposite (serial) {
+    console.log('Circling in the opposite direction...')
+    piwars.drive(0, 30, serial)
+}
+
 module.exports = { moveToTarget, stop, circle }

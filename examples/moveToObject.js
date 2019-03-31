@@ -39,10 +39,10 @@ async function goToColor (colorName, video, bus, address, serial) {
                 const c = cvUtils.findCentre(big)
                 const deviation = cvUtils.xAxisDeviation(c.cX, 300)
                 console.log(`Big enough! Recenter! Deviation is ${deviation}`)
-                robotUtils.moveToTarget(30, deviation, 0.1, serial)
+                robotUtils.moveToTarget(30, deviation, 0.2, serial)
             } else {
                 console.log('Nothing big enough. Stop...')
-                robotUtils.stop(serial)
+                robotUtils.circleOpposite(serial)
             }
             
         } else {
@@ -50,7 +50,7 @@ async function goToColor (colorName, video, bus, address, serial) {
             robotUtils.stop(serial)
         }
 
-        await sleep(100)
+        await sleep(70)
 
     }
 }
@@ -83,7 +83,7 @@ async function searchForColor (colorName, video, serial) {
             robotUtils.circle(serial)
         }
 
-        await sleep(100)
+        await sleep(70)
     }
 }
 
