@@ -87,6 +87,23 @@ async function searchForColor (colorName, video, serial) {
     }
 }
 
+async function goBack (bus, address, serial) {
+    let farEnough = false
+    while (!farEnough) {
+    
+        const dist = tof.readNTimes(10, bus, address)
+        
+        if ( dist >= 300 ) {
+            farEnough = true
+        } else {
+            robotUtils.back(serial)
+        }
+    
+        await sleep(70)
+    }
+}
+
+
 // Open the video feed
 const wCap = cvUtils.openVideo()
 // Init the tof sensor
@@ -109,12 +126,15 @@ raspi.init(() => {
         // Red, Blue, Yellow and, finally, Green.
         searchForColor('red', wCap, serial)
         .then(() => goToColor('red', wCap, bus, address, serial))
+        .then(() => goBack(serial))
         
         .then(() => searchForColor('blue', wCap, serial))
         .then(() => goToColor('blue', wCap, bus, address, serial))
+        .then(() => goBack(serial))
         
         .then(() => searchForColor('yellow', wCap, serial))
         .then(() => goToColor('yellow', wCap, bus, address, serial))
+        .then(() => goBack(serial))
         
         .then(() => searchForColor('green', wCap, serial))
         .then(() => goToColor('green', wCap, bus, address, serial))

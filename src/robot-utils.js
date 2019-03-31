@@ -27,4 +27,9 @@ function circleOpposite (serial) {
     piwars.drive(0, 30, serial)
 }
 
-module.exports = { moveToTarget, stop, circle, circleOpposite }
+function back(serial) {
+    console.log('Going back!')
+    piwars.drive(-30, -30, serial)
+}
+
+module.exports = { moveToTarget, stop, circle, circleOpposite, back }
